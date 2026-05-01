@@ -20,6 +20,8 @@ namespace MemorySecurIT.Forms
         private Panel panelBoutons;
         private List<Button> cartesSelectionnees = new List<Button>();
         private int joueurActuel = 1; // 1 = vert, 2 = rouge
+        private List<Button> paireActuelle = new List<Button>();
+        private bool tourEnCours = false;
 
         public GameForm()
         {
@@ -203,12 +205,15 @@ namespace MemorySecurIT.Forms
 
         private void Carte_Click(object sender, EventArgs e)
         {
+            // Empêcher de cliquer pendant un tour en cours
+            if (tourEnCours) return;
+
             Button carte = sender as Button;
             if (carte != null && !cartesSelectionnees.Contains(carte))
             {
                 // Révéler la carte
                 carte.Text = carte.Tag?.ToString() ?? "?";
-                cartesSelectionnees.Add(carte);
+                paireActuelle.Add(carte);
 
                 // Appliquer la couleur selon le joueur actuel
                 if (joueurActuel == 1)
@@ -220,10 +225,45 @@ namespace MemorySecurIT.Forms
                     carte.BackColor = Color.FromArgb(200, 50, 50); // Rouge - Joueur 2
                 }
 
-                // Quand 2 cartes sont sélectionnées, changer de joueur
-                if (cartesSelectionnees.Count % 2 == 0)
+                // Quand 2 cartes sont sélectionnées, vérifier si elles correspondent
+                if (paireActuelle.Count == 2)
                 {
-                    joueurActuel = (joueurActuel == 1) ? 2 : 1;
+                    tourEnCours = true;
+                    Button carte1 = paireActuelle[0];
+                    Button carte2 = paireActuelle[1];
+
+                    if (carte1.Tag?.ToString() == carte2.Tag?.ToString())
+                    {
+                        // Les cartes correspondent - les garder révélées
+                        cartesSelectionnees.Add(carte1);
+                        cartesSelectionnees.Add(carte2);
+                        paireActuelle.Clear();
+                        tourEnCours = false;
+                    }
+                    else
+                    {
+                        // Les cartes ne correspondent pas - les retourner après un délai
+                        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+                        timer.Interval = 1000;
+                        timer.Tick += (s, args) =>
+                        {
+                            timer.Stop();
+                            timer.Dispose();
+
+                            // Remettre les cartes face cachée
+                            carte1.Text = "?";
+                            carte1.BackColor = Color.FromArgb(0, 122, 204);
+                            carte2.Text = "?";
+                            carte2.BackColor = Color.FromArgb(0, 122, 204);
+
+                            paireActuelle.Clear();
+                            tourEnCours = false;
+
+                            // Changer de joueur après un échec
+                            joueurActuel = (joueurActuel == 1) ? 2 : 1;
+                        };
+                        timer.Start();
+                    }
                 }
             }
         }
