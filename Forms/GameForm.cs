@@ -9,10 +9,15 @@ namespace MemorySecurIT.Forms
     {
         private Label lblTitre;
         private Button btnRetour;
+        private Button btn4x4;
+        private Button btn6x6;
+        private Button btn8x8;
         private Button[,] grilleCartes;
-        private const int TAILLE_GRILLE = 6;
-        private const int TAILLE_CARTE = 70;
+        private int tailleGrille = 0;
+        private int tailleCarte = 70;
         private Random random = new Random();
+        private Panel panelGrille;
+        private Panel panelBoutons;
 
         public GameForm()
         {
@@ -27,26 +32,87 @@ namespace MemorySecurIT.Forms
             this.BackColor = Color.FromArgb(45, 45, 48);
             this.FormClosing += GameForm_FormClosing;
 
-            // Titre
             lblTitre = new Label()
             {
-                Text = "Jeu en cours...",
+                Text = "Choisissez la taille de grille",
                 Font = new Font("Segoe UI", 20, FontStyle.Bold),
                 ForeColor = Color.White,
                 AutoSize = true,
-                Location = new Point(300, 30)
+                Location = new Point(250, 30)
             };
             this.Controls.Add(lblTitre);
 
-            // Créer la grille 6x6
-            CreerGrille();
+            panelBoutons = new Panel()
+            {
+                Size = new Size(500, 60),
+                Location = new Point(200, 100),
+                BackColor = Color.Transparent
+            };
+            this.Controls.Add(panelBoutons);
+
+            //4x4
+            btn4x4 = new Button()
+            {
+                Text = "4 x 4",
+                Size = new Size(120, 50),
+                Location = new Point(30, 5),
+                Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                BackColor = Color.FromArgb(0, 122, 204),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            btn4x4.FlatAppearance.BorderSize = 0;
+            btn4x4.Click += (s, e) => CreerGrille(4);
+            panelBoutons.Controls.Add(btn4x4);
+
+            //6x6
+            btn6x6 = new Button()
+            {
+                Text = "6 x 6",
+                Size = new Size(120, 50),
+                Location = new Point(190, 5),
+                Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                BackColor = Color.FromArgb(0, 122, 204),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            btn6x6.FlatAppearance.BorderSize = 0;
+            btn6x6.Click += (s, e) => CreerGrille(6);
+            panelBoutons.Controls.Add(btn6x6);
+
+            //8x8
+            btn8x8 = new Button()
+            {
+                Text = "8 x 8",
+                Size = new Size(120, 50),
+                Location = new Point(350, 5),
+                Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                BackColor = Color.FromArgb(0, 122, 204),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            btn8x8.FlatAppearance.BorderSize = 0;
+            btn8x8.Click += (s, e) => CreerGrille(8);
+            panelBoutons.Controls.Add(btn8x8);
+
+            panelGrille = new Panel()
+            {
+                Location = new Point(0, 180),
+                Size = new Size(884, 380),
+                AutoScroll = true,
+                BackColor = Color.Transparent
+            };
+            this.Controls.Add(panelGrille);
 
             // Bouton Retour
             btnRetour = new Button()
             {
                 Text = "Retour au Menu",
                 Size = new Size(150, 40),
-                Location = new Point(315, 600),
+                Location = new Point(375, 600),
                 Font = new Font("Segoe UI", 12),
                 BackColor = Color.FromArgb(100, 100, 100),
                 ForeColor = Color.White,
@@ -58,38 +124,49 @@ namespace MemorySecurIT.Forms
             this.Controls.Add(btnRetour);
         }
 
-        private void CreerGrille()
+        private void CreerGrille(int taille)
         {
-            grilleCartes = new Button[TAILLE_GRILLE, TAILLE_GRILLE];
-
-            //Créer les paire
-            List<string> symboles = new List<string>();
-            string[] symbols = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M" };
+            tailleGrille = taille;
             
-            for (int i = 0; i < 18; i++)
+            //Adapter taille cartes selon grille
+            if (taille <= 4) tailleCarte = 80;
+            else if (taille <= 6) tailleCarte = 70;
+            else tailleCarte = 55;
+
+            //Vider grille existante
+            panelGrille.Controls.Clear();
+
+            grilleCartes = new Button[tailleGrille, tailleGrille];
+
+            //Créer les paires 
+            List<string> symboles = new List<string>();
+            int nbPaires = (tailleGrille * tailleGrille) / 2;
+            string[] symbols = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+            
+            for (int i = 0; i < nbPaires; i++)
             {
                 symboles.Add(symbols[i % symbols.Length]);
                 symboles.Add(symbols[i % symbols.Length]);
             }
 
-            //Mélange  symboles
+            //Mélanger symboles
             Shuffle(symboles);
 
-            //Créer boutons de la grille
-            int startX = (this.ClientSize.Width - (TAILLE_GRILLE * TAILLE_CARTE + (TAILLE_GRILLE - 1) * 10)) / 2;
-            int startY = 80;
+            // créer bouton grille
+            int startX = (panelGrille.Width - (tailleGrille * tailleCarte + (tailleGrille - 1) * 10)) / 2;
+            int startY = 20;
 
             int index = 0;
-            for (int row = 0; row < TAILLE_GRILLE; row++)
+            for (int row = 0; row < tailleGrille; row++)
             {
-                for (int col = 0; col < TAILLE_GRILLE; col++)
+                for (int col = 0; col < tailleGrille; col++)
                 {
                     Button carte = new Button()
                     {
                         Text = "?",
-                        Size = new Size(TAILLE_CARTE, TAILLE_CARTE),
-                        Location = new Point(startX + col * (TAILLE_CARTE + 10), startY + row * (TAILLE_CARTE + 10)),
-                        Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                        Size = new Size(tailleCarte, tailleCarte),
+                        Location = new Point(startX + col * (tailleCarte + 10), startY + row * (tailleCarte + 10)),
+                        Font = new Font("Segoe UI", 14, FontStyle.Bold),
                         BackColor = Color.FromArgb(0, 122, 204),
                         ForeColor = Color.White,
                         FlatStyle = FlatStyle.Flat,
@@ -100,10 +177,13 @@ namespace MemorySecurIT.Forms
                     carte.Click += Carte_Click;
                     
                     grilleCartes[row, col] = carte;
-                    this.Controls.Add(carte);
+                    panelGrille.Controls.Add(carte);
                     index++;
                 }
             }
+
+
+            lblTitre.Text = $"Grille {taille} x {taille}";
         }
 
         private void Shuffle<T>(List<T> list)
@@ -124,7 +204,7 @@ namespace MemorySecurIT.Forms
             Button carte = sender as Button;
             if (carte != null)
             {
-                // Révéler la carte
+                //Révéle carte
                 carte.Text = carte.Tag?.ToString() ?? "?";
                 carte.BackColor = Color.FromArgb(0, 180, 0);
             }
