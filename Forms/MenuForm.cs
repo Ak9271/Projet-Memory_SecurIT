@@ -24,7 +24,6 @@ namespace MemorySecurIT.Forms
             this.MaximizeBox = false;
             this.BackColor = Color.FromArgb(45, 45, 48);
 
-            // Titre
             lblTitre = new Label()
             {
                 Text = "MEMORY SECURIT",
@@ -35,7 +34,7 @@ namespace MemorySecurIT.Forms
             };
             this.Controls.Add(lblTitre);
 
-            // Bouton Démarrer
+            //Bouton Démarrer
             btnDemarrer = new Button()
             {
                 Text = "Démarrer",
@@ -51,7 +50,7 @@ namespace MemorySecurIT.Forms
             btnDemarrer.Click += BtnDemarrer_Click;
             this.Controls.Add(btnDemarrer);
 
-            // Bouton Pause
+            //bouton Pause
             btnPause = new Button()
             {
                 Text = "Pause",
