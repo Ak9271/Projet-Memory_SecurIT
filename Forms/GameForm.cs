@@ -18,6 +18,8 @@ namespace MemorySecurIT.Forms
         private Random random = new Random();
         private Panel panelGrille;
         private Panel panelBoutons;
+        private List<Button> cartesSelectionnees = new List<Button>();
+        private int joueurActuel = 1; // 1 = vert, 2 = rouge
 
         public GameForm()
         {
@@ -202,11 +204,27 @@ namespace MemorySecurIT.Forms
         private void Carte_Click(object sender, EventArgs e)
         {
             Button carte = sender as Button;
-            if (carte != null)
+            if (carte != null && !cartesSelectionnees.Contains(carte))
             {
-                //Révéle carte
+                // Révéler la carte
                 carte.Text = carte.Tag?.ToString() ?? "?";
-                carte.BackColor = Color.FromArgb(0, 180, 0);
+                cartesSelectionnees.Add(carte);
+
+                // Appliquer la couleur selon le joueur actuel
+                if (joueurActuel == 1)
+                {
+                    carte.BackColor = Color.FromArgb(0, 180, 0); // Vert - Joueur 1
+                }
+                else
+                {
+                    carte.BackColor = Color.FromArgb(200, 50, 50); // Rouge - Joueur 2
+                }
+
+                // Quand 2 cartes sont sélectionnées, changer de joueur
+                if (cartesSelectionnees.Count % 2 == 0)
+                {
+                    joueurActuel = (joueurActuel == 1) ? 2 : 1;
+                }
             }
         }
 
