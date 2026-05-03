@@ -31,7 +31,7 @@ Bienvenue dans **SecurIT Memory** ! Un jeu de Memory captivant sur le thème de 
 
 ## 🚀 Installation & Lancement
 
-1. **Prérequis** : Assurez-vous d'avoir le SDK .NET installé sur votre machine.
+1. **Prérequis** : Assurez-vous d'avoir le SDK .NET installé sur votre machine avec les bonnes versions et de changer le "TargetFramework" dans le dossier "MemorySecurIT.csproj" en fonction de la version que vous avez installé de .NET.
 2. **Cloner ou Télécharger** le projet sur votre ordinateur.
 3. Ouvrez un terminal dans le dossier racine du projet (là où se trouve `MemorySecurIT.csproj`).
 4. Lancez la commande suivante :
