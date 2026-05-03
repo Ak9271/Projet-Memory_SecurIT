@@ -10,7 +10,6 @@ namespace MemorySecurIT.Forms
     {
         private Label lblTitre;
         private Button btnRetour;
-        private Button btnPause;
         private Button btn4x4;
         private Button btn6x6;
         private Button btn8x8;
@@ -74,21 +73,6 @@ namespace MemorySecurIT.Forms
                 BackColor = Color.Transparent
             };
             this.Controls.Add(panelGrille);
-
-            btnPause = new Button()
-            {
-                Text = "Pause",
-                Size = new Size(120, 40),
-                Location = new Point(740, 30),
-                Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                BackColor = Color.FromArgb(204, 120, 0),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Cursor = Cursors.Hand
-            };
-            btnPause.FlatAppearance.BorderSize = 0;
-            btnPause.Click += BtnPause_Click;
-            this.Controls.Add(btnPause);
 
             btnRetour = new Button()
             {
@@ -261,11 +245,6 @@ namespace MemorySecurIT.Forms
             {
                 MessageBox.Show("Félicitations ! La partie est terminée.");
             }
-        }
-
-        private void BtnPause_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Jeu en pause !", "Pause", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void BtnRetour_Click(object sender, EventArgs e)
