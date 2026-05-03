@@ -12,12 +12,14 @@ namespace MemorySecurIT.Classes
 
         public List<Carte> Cartes { get { return cartes; } }
 
+        // initialise la liste de cartes
         public JeuMemory()
         {
             cartes = new List<Carte>();
             random = new Random();
         }
 
+        // crée et mélange les cartes
         public void Initialiser(int taille, string pathImages)
         {
             cartes.Clear();
@@ -35,6 +37,7 @@ namespace MemorySecurIT.Classes
             Melanger(cartes);
         }
 
+        // mélange aléatoirement la liste
         private void Melanger(List<Carte> liste)
         {
             int n = liste.Count;
@@ -48,11 +51,13 @@ namespace MemorySecurIT.Classes
             }
         }
 
+        // vérifie si deux cartes correspondent
         public bool VerifierPaire(Carte c1, Carte c2)
         {
             return c1.Id == c2.Id;
         }
 
+        // vérifie si toutes les cartes sont trouvées
         public bool PartieTerminee()
         {
             foreach (Carte c in cartes)

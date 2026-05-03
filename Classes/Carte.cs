@@ -16,6 +16,7 @@ namespace MemorySecurIT.Classes
 		public string CheminImage { get; set; }
 		public EtatCarte Etat { get; set; }
 
+		// initialise une carte avec son id et image
 		public Carte(int id, string cheminImage)
 		{
 			Id = id;

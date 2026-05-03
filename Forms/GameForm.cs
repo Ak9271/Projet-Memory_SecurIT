@@ -52,11 +52,13 @@ namespace MemorySecurIT.Forms
         private readonly Color TexteBlanc = Color.White;
         private readonly Color TexteGris = Color.FromArgb(140, 150, 170);
 
+        // initialise le formulaire de jeu
         public GameForm()
         {
             InitializeComponent();
         }
 
+        // construit tous les composants visuels
         private void InitializeComponent()
         {
             this.Text = "Memory SecurIT — Jeu";
@@ -263,6 +265,7 @@ namespace MemorySecurIT.Forms
             this.Load += (s, e) => CreerGrille(AppConfig.TailleGrille);
         }
 
+        // met à jour l'affichage du chrono
         private void ChronoTimer_Tick(object sender, EventArgs e)
         {
             tempsEcouleSecondes++;
@@ -270,6 +273,7 @@ namespace MemorySecurIT.Forms
             lblChrono.Text = "⏱️ " + time.ToString(@"mm\:ss");
         }
 
+        // génère la grille de cartes
         private void CreerGrille(int taille)
         {
             tailleGrille = taille;
@@ -353,6 +357,7 @@ namespace MemorySecurIT.Forms
             }
         }
 
+        // met à jour l'ui du joueur
         private void MettreAJourUiJoueur()
         {
             if (joueurActuel == 1)
@@ -377,6 +382,7 @@ namespace MemorySecurIT.Forms
             }
         }
 
+        // gère le clic sur une carte
         private void Carte_Click(object sender, EventArgs e)
         {
             if (tourEnCours) return;
@@ -464,6 +470,7 @@ namespace MemorySecurIT.Forms
             }
         }
 
+        // vérifie si la partie est terminée
         private void VerifierVictoire()
         {
             if (jeu.PartieTerminee())
@@ -486,6 +493,7 @@ namespace MemorySecurIT.Forms
             }
         }
 
+        // retourne au menu principal
         private void BtnRetour_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -493,6 +501,7 @@ namespace MemorySecurIT.Forms
             menu.Show();
         }
 
+        // ferme l'application
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
