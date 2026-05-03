@@ -20,7 +20,7 @@ namespace MemorySecurIT.Forms
         private Panel panelGrille;
         private Panel panelBoutons;
         private List<Button> cartesSelectionnees = new List<Button>();
-        private int joueurActuel = 1; // 1 = vert, 2 = rouge
+        private int joueurActuel = 1;
         private List<Button> paireActuelle = new List<Button>();
         private bool tourEnCours = false;
 
@@ -248,9 +248,6 @@ namespace MemorySecurIT.Forms
         private void BtnRetour_Click(object sender, EventArgs e)
         {
             this.Hide();
-            // Décommente si MenuForm existe
-            // MenuForm menu = new MenuForm();
-            // menu.Show();
         }
 
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
