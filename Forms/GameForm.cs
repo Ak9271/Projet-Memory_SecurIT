@@ -9,6 +9,7 @@ namespace MemorySecurIT.Forms
     public partial class GameForm : Form
     {
         private Label lblTitre;
+        private Label lblGrilleTaille;
         private Button btnRetour;
         private Button btn4x4;
         private Button btn6x6;
@@ -18,7 +19,7 @@ namespace MemorySecurIT.Forms
         private int tailleCarte = 70;
         private Random random = new Random();
         private Panel panelGrille;
-        private Panel panelBoutons;
+        private Panel panelGauche;
         private List<Button> cartesSelectionnees = new List<Button>();
         private int joueurActuel = 1;
         private List<Button> paireActuelle = new List<Button>();
@@ -32,53 +33,71 @@ namespace MemorySecurIT.Forms
         private void InitializeComponent()
         {
             this.Text = "Memory SecurIT - Jeu";
-            this.Size = new Size(900, 750);
+            this.Size = new Size(1100, 750);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.FromArgb(45, 45, 48);
             this.FormClosing += GameForm_FormClosing;
 
+            // Titre principal "SecurIT"
             lblTitre = new Label()
-        {
-            Text = "Choisissez la taille de grille",
-            Font = new Font("Segoe UI", 20, FontStyle.Bold),
-            ForeColor = Color.White,
-            AutoSize = false,
-            Size = new Size(this.ClientSize.Width, 50),
-            Location = new Point(0, 30),
-            TextAlign = ContentAlignment.MiddleCenter
+            {
+                Text = "SecurIT",
+                Font = new Font("Segoe UI", 40, FontStyle.Bold),
+                ForeColor = Color.White,
+                AutoSize = false,
+                Size = new Size(this.ClientSize.Width, 80),
+                Location = new Point(0, 10),
+                TextAlign = ContentAlignment.MiddleCenter
             };
             this.Controls.Add(lblTitre);
-            
-            panelBoutons = new Panel()            
+
+            // Panel gauche avec les boutons de taille
+            panelGauche = new Panel()
             {
-                Size = new Size(200, 280),
-                Location = new Point(20, 220),
+                Size = new Size(200, 400),
+                Location = new Point(20, 120),
                 BackColor = Color.Transparent
             };
-            this.Controls.Add(panelBoutons);
+            this.Controls.Add(panelGauche);
 
-            btn4x4 = CreerBoutonMenu("4 x 4", 10, 4);
-            btn6x6 = CreerBoutonMenu("6 x 6", 105, 6);
-            btn8x8 = CreerBoutonMenu("8 x 8", 200, 8);
+            // Label "Grille X x X"
+            lblGrilleTaille = new Label()
+            {
+                Text = "Grille 8 x 8",
+                Font = new Font("Segoe UI", 18, FontStyle.Bold),
+                ForeColor = Color.White,
+                AutoSize = false,
+                Size = new Size(180, 40),
+                Location = new Point(10, 10),
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+            panelGauche.Controls.Add(lblGrilleTaille);
 
-            panelBoutons.Controls.Add(btn4x4);
-            panelBoutons.Controls.Add(btn6x6);
-            panelBoutons.Controls.Add(btn8x8);
+            // Boutons de taille en colonne
+            btn4x4 = CreerBoutonMenu("4 x 4", 70, 4);
+            btn6x6 = CreerBoutonMenu("6 x 6", 165, 6);
+            btn8x8 = CreerBoutonMenu("8 x 8", 260, 8);
 
+            panelGauche.Controls.Add(btn4x4);
+            panelGauche.Controls.Add(btn6x6);
+            panelGauche.Controls.Add(btn8x8);
+
+            // Panel droit avec la grille
             panelGrille = new Panel()
             {
                 Location = new Point(250, 120),
-                Size = new Size(630, 600),
+                Size = new Size(820, 580),
                 AutoScroll = true,
                 BackColor = Color.Transparent
             };
             this.Controls.Add(panelGrille);
 
+            // Bouton Retour
             btnRetour = new Button()
             {
                 Text = "Retour au Menu",
                 Size = new Size(150, 40),
-                Location = new Point(375, 620),
+                Location = new Point(475, 710),
                 Font = new Font("Segoe UI", 12),
                 BackColor = Color.FromArgb(100, 100, 100),
                 ForeColor = Color.White,
@@ -172,7 +191,8 @@ namespace MemorySecurIT.Forms
                 }
             }
 
-            lblTitreGrille.Text = $"Grille {taille} x {taille}";
+            // Mettre à jour le label de la taille de grille
+            lblGrilleTaille.Text = $"Grille {taille} x {taille}";
         }
 
         private void Shuffle<T>(List<T> list)
