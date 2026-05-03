@@ -7,7 +7,6 @@ namespace MemorySecurIT.Forms
     public partial class MenuForm : Form
     {
         private Button btnDemarrer;
-        private Button btnPause;
         private Label lblTitre;
 
         public MenuForm()
@@ -50,21 +49,6 @@ namespace MemorySecurIT.Forms
             btnDemarrer.Click += BtnDemarrer_Click;
             this.Controls.Add(btnDemarrer);
 
-            //bouton Pause
-            btnPause = new Button()
-            {
-                Text = "Pause",
-                Size = new Size(150, 50),
-                Location = new Point(115, 170),
-                Font = new Font("Segoe UI", 14, FontStyle.Bold),
-                BackColor = Color.FromArgb(204, 120, 0),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Cursor = Cursors.Hand
-            };
-            btnPause.FlatAppearance.BorderSize = 0;
-            btnPause.Click += BtnPause_Click;
-            this.Controls.Add(btnPause);
         }
 
         private void BtnDemarrer_Click(object sender, EventArgs e)
@@ -74,9 +58,5 @@ namespace MemorySecurIT.Forms
             this.Hide();
         }
 
-        private void BtnPause_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Jeu en pause !", "Pause", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
     }
 }
