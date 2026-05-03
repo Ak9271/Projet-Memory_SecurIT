@@ -16,6 +16,9 @@
     <Compile Update="Forms\GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\OptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
   <None Update="Assets\Images\*.*">
