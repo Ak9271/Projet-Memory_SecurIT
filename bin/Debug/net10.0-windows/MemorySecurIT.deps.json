@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "MemorySecurIT/1.0.0": {
+        "runtime": {
+          "MemorySecurIT.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MemorySecurIT/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
