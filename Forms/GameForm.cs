@@ -35,6 +35,7 @@ namespace MemorySecurIT.Forms
         private JeuMemory jeu = new JeuMemory();
 
         private System.Windows.Forms.Timer chronoTimer;
+        private System.Windows.Forms.Timer hardcoreTimer;
         private int tempsEcouleSecondes = 0;
         private Label lblChrono;
 
@@ -70,6 +71,10 @@ namespace MemorySecurIT.Forms
             chronoTimer = new System.Windows.Forms.Timer();
             chronoTimer.Interval = 1000;
             chronoTimer.Tick += ChronoTimer_Tick;
+
+            hardcoreTimer = new System.Windows.Forms.Timer();
+            hardcoreTimer.Interval = 30000; // 30 secondes
+            hardcoreTimer.Tick += HardcoreTimer_Tick;
 
             string logoPath = Path.Combine(Application.StartupPath, "Assets", "Images", "Logo.png");
             if (File.Exists(logoPath))
@@ -273,6 +278,49 @@ namespace MemorySecurIT.Forms
             lblChrono.Text = "⏱️ " + time.ToString(@"mm\:ss");
         }
 
+        // mélange les cartes non trouvées en mode hardcore
+        private void HardcoreTimer_Tick(object sender, EventArgs e)
+        {
+            if (tourEnCours) return; // on évite de mélanger pendant qu'on regarde une paire
+
+            List<PictureBox> cartesCachees = new List<PictureBox>();
+            List<Carte> modelesCachees = new List<Carte>();
+
+            for (int row = 0; row < tailleGrille; row++)
+            {
+                for (int col = 0; col < tailleGrille; col++)
+                {
+                    PictureBox pb = grilleCartes[row, col];
+                    Carte c = pb.Tag as Carte;
+                    if (c != null && c.Etat == EtatCarte.Cachee && !paireActuelle.Contains(pb))
+                    {
+                        cartesCachees.Add(pb);
+                        modelesCachees.Add(c);
+                    }
+                }
+            }
+
+            if (cartesCachees.Count > 1)
+            {
+                // Mélange de Fisher-Yates sur les modèles
+                int n = modelesCachees.Count;
+                while (n > 1)
+                {
+                    n--;
+                    int k = random.Next(n + 1);
+                    Carte value = modelesCachees[k];
+                    modelesCachees[k] = modelesCachees[n];
+                    modelesCachees[n] = value;
+                }
+
+                // Réaffectation
+                for (int i = 0; i < cartesCachees.Count; i++)
+                {
+                    cartesCachees[i].Tag = modelesCachees[i];
+                }
+            }
+        }
+
         // génère la grille de cartes
         private void CreerGrille(int taille)
         {
@@ -291,6 +339,8 @@ namespace MemorySecurIT.Forms
             tempsEcouleSecondes = 0;
             lblChrono.Text = "⏱️ 00:00";
             chronoTimer.Start();
+            hardcoreTimer.Stop();
+            if (taille == 8) hardcoreTimer.Start();
 
             if (taille <= 4) tailleCarte = 90;
             else if (taille <= 6) tailleCarte = 75;
@@ -476,6 +526,7 @@ namespace MemorySecurIT.Forms
             if (jeu.PartieTerminee())
             {
                 chronoTimer.Stop();
+                hardcoreTimer.Stop();
                 string vainqueur;
                 if (scoreJ1 > scoreJ2) vainqueur = "Joueur 1 remporte la partie !";
                 else if (scoreJ2 > scoreJ1) vainqueur = "Joueur 2 remporte la partie !";
@@ -496,6 +547,8 @@ namespace MemorySecurIT.Forms
         // retourne au menu principal
         private void BtnRetour_Click(object sender, EventArgs e)
         {
+            chronoTimer.Stop();
+            hardcoreTimer.Stop();
             this.Hide();
             MenuForm menu = new MenuForm();
             menu.Show();

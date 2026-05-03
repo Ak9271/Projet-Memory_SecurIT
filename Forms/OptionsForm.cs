@@ -61,7 +61,7 @@ namespace MemorySecurIT.Forms
 
             btn4x4 = CreerBoutonTaille("4 × 4 (Facile)", 150, 4);
             btn6x6 = CreerBoutonTaille("6 × 6 (Moyen)", 220, 6);
-            btn8x8 = CreerBoutonTaille("8 × 8 (Difficile)", 290, 8);
+            btn8x8 = CreerBoutonTaille("8 × 8 (Hardcore)", 290, 8);
             
             this.Controls.Add(btn4x4);
             this.Controls.Add(btn6x6);
