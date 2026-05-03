@@ -446,7 +446,7 @@ namespace MemorySecurIT.Forms
                     else
                     {
                         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-                        timer.Interval = 900;
+                        timer.Interval = 1000;
                         timer.Tick += (s, args) =>
                         {
                             timer.Stop();
