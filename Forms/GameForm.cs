@@ -38,16 +38,18 @@ namespace MemorySecurIT.Forms
             this.FormClosing += GameForm_FormClosing;
 
             lblTitre = new Label()
-            {
-                Text = "Choisissez la taille de grille",
-                Font = new Font("Segoe UI", 20, FontStyle.Bold),
-                ForeColor = Color.White,
-                AutoSize = true,
-                Location = new Point(250, 30)
+        {
+            Text = "Choisissez la taille de grille",
+            Font = new Font("Segoe UI", 20, FontStyle.Bold),
+            ForeColor = Color.White,
+            AutoSize = false,
+            Size = new Size(this.ClientSize.Width, 50),
+            Location = new Point(0, 30),
+            TextAlign = ContentAlignment.MiddleCenter
             };
             this.Controls.Add(lblTitre);
-
-            panelBoutons = new Panel()
+            
+            panelBoutons = new Panel()            
             {
                 Size = new Size(500, 60),
                 Location = new Point(200, 100),
