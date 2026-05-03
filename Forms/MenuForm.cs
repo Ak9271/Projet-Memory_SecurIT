@@ -15,11 +15,13 @@ namespace MemorySecurIT.Forms
         private Label lblVersion;
         private Panel panelCard;
 
+        // initialise le menu principal
         public MenuForm()
         {
             InitializeComponent();
         }
 
+        // construit les composants du menu
         private void InitializeComponent()
         {
             this.Text = "Memory SecurIT";
@@ -135,6 +137,7 @@ namespace MemorySecurIT.Forms
             panelCard.Controls.Add(lblVersion);
         }
 
+        // lance une nouvelle partie
         private void BtnDemarrer_Click(object sender, EventArgs e)
         {
             GameForm gameForm = new GameForm();
@@ -142,6 +145,7 @@ namespace MemorySecurIT.Forms
             this.Hide();
         }
 
+        // ouvre la page options
         private void BtnOptions_Click(object sender, EventArgs e)
         {
             OptionsForm optionsForm = new OptionsForm();
@@ -149,6 +153,7 @@ namespace MemorySecurIT.Forms
             this.Hide();
         }
 
+        // quitte l'application
         private void BtnQuitter_Click(object sender, EventArgs e)
         {
             Application.Exit();

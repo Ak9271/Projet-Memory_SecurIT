@@ -19,11 +19,13 @@ namespace MemorySecurIT.Forms
         private readonly Color FondPanel = Color.FromArgb(26, 34, 55);
         private readonly Color TexteBlanc = Color.White;
 
+        // initialise la page options
         public OptionsForm()
         {
             InitializeComponent();
         }
 
+        // construit les composants de la page
         private void InitializeComponent()
         {
             this.Text = "Memory SecurIT — Options";
@@ -59,7 +61,7 @@ namespace MemorySecurIT.Forms
 
             btn4x4 = CreerBoutonTaille("4 × 4 (Facile)", 150, 4);
             btn6x6 = CreerBoutonTaille("6 × 6 (Moyen)", 220, 6);
-            btn8x8 = CreerBoutonTaille("8 × 8 (Difficile)", 290, 8);
+            btn8x8 = CreerBoutonTaille("8 × 8 (Hardcore)", 290, 8);
             
             this.Controls.Add(btn4x4);
             this.Controls.Add(btn6x6);
@@ -86,6 +88,7 @@ namespace MemorySecurIT.Forms
             this.Controls.Add(btnRetour);
         }
 
+        // crée un bouton de sélection de taille
         private Button CreerBoutonTaille(string texte, int y, int taille)
         {
             Button btn = new Button()
@@ -111,6 +114,7 @@ namespace MemorySecurIT.Forms
             return btn;
         }
 
+        // surligne le bouton sélectionné
         private void MettreAJourBoutonActif()
         {
             ResetBouton(btn4x4);
@@ -122,18 +126,21 @@ namespace MemorySecurIT.Forms
             else if (AppConfig.TailleGrille == 8) ActiverBouton(btn8x8);
         }
 
+        // réinitialise l'apparence d'un bouton
         private void ResetBouton(Button btn)
         {
             btn.BackColor = FondPanel;
             btn.FlatAppearance.BorderColor = Color.FromArgb(40, 50, 80);
         }
 
+        // active visuellement un bouton
         private void ActiverBouton(Button btn)
         {
             btn.BackColor = BleuPrimaire;
             btn.FlatAppearance.BorderColor = Color.FromArgb(0, 160, 255);
         }
 
+        // revient au menu principal
         private void BtnRetour_Click(object sender, EventArgs e)
         {
             MenuForm menu = new MenuForm();
@@ -141,6 +148,7 @@ namespace MemorySecurIT.Forms
             this.Hide();
         }
         
+        // ferme l'application à la fermeture
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             Application.Exit();
