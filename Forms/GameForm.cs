@@ -9,8 +9,8 @@ namespace MemorySecurIT.Forms
     public partial class GameForm : Form
     {
         private Label lblTitre;
+        private Label lblTitreGrille;
         private Button btnRetour;
-        private Button btnPause;
         private Button btn4x4;
         private Button btn6x6;
         private Button btn8x8;
@@ -40,25 +40,39 @@ namespace MemorySecurIT.Forms
 
             lblTitre = new Label()
             {
-                Text = "Choisissez la taille de grille",
-                Font = new Font("Segoe UI", 20, FontStyle.Bold),
+                Text = "SecurIT",
+                Font = new Font("Segoe UI", 28, FontStyle.Bold),
                 ForeColor = Color.White,
-                AutoSize = true,
-                Location = new Point(250, 30)
+                AutoSize = false,
+                Size = new Size(300, 100),
+                Location = new Point(300, 20),
+                TextAlign = ContentAlignment.MiddleCenter
             };
             this.Controls.Add(lblTitre);
 
+            lblTitreGrille = new Label()
+            {
+                Text = "",
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                ForeColor = Color.White,
+                AutoSize = false,
+                Size = new Size(200, 80),
+                Location = new Point(20, 130),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            this.Controls.Add(lblTitreGrille);
+
             panelBoutons = new Panel()
             {
-                Size = new Size(500, 60),
-                Location = new Point(200, 100),
+                Size = new Size(200, 280),
+                Location = new Point(20, 220),
                 BackColor = Color.Transparent
             };
             this.Controls.Add(panelBoutons);
 
-            btn4x4 = CreerBoutonMenu("4 x 4", 30, 4);
-            btn6x6 = CreerBoutonMenu("6 x 6", 190, 6);
-            btn8x8 = CreerBoutonMenu("8 x 8", 350, 8);
+            btn4x4 = CreerBoutonMenu("4 x 4", 10, 4);
+            btn6x6 = CreerBoutonMenu("6 x 6", 105, 6);
+            btn8x8 = CreerBoutonMenu("8 x 8", 200, 8);
 
             panelBoutons.Controls.Add(btn4x4);
             panelBoutons.Controls.Add(btn6x6);
@@ -66,27 +80,13 @@ namespace MemorySecurIT.Forms
 
             panelGrille = new Panel()
             {
-                Location = new Point(0, 180),
-                Size = new Size(884, 400),
+                Location = new Point(250, 120),
+                Size = new Size(630, 600),
                 AutoScroll = true,
                 BackColor = Color.Transparent
             };
             this.Controls.Add(panelGrille);
 
-            btnPause = new Button()
-            {
-                Text = "Pause",
-                Size = new Size(120, 40),
-                Location = new Point(740, 30),
-                Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                BackColor = Color.FromArgb(204, 120, 0),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Cursor = Cursors.Hand
-            };
-            btnPause.FlatAppearance.BorderSize = 0;
-            btnPause.Click += BtnPause_Click;
-            this.Controls.Add(btnPause);
 
             btnRetour = new Button()
             {
@@ -104,14 +104,14 @@ namespace MemorySecurIT.Forms
             this.Controls.Add(btnRetour);
         }
 
-        private Button CreerBoutonMenu(string texte, int x, int taille)
+        private Button CreerBoutonMenu(string texte, int y, int taille)
         {
             Button btn = new Button()
             {
                 Text = texte,
-                Size = new Size(120, 50),
-                Location = new Point(x, 5),
-                Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                Size = new Size(180, 80),
+                Location = new Point(10, y),
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
                 BackColor = Color.FromArgb(0, 122, 204),
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
@@ -186,7 +186,7 @@ namespace MemorySecurIT.Forms
                 }
             }
 
-            lblTitre.Text = $"Grille {taille} x {taille}";
+            lblTitreGrille.Text = $"Grille {taille} x {taille}";
         }
 
         private void Shuffle<T>(List<T> list)
@@ -261,10 +261,6 @@ namespace MemorySecurIT.Forms
             }
         }
 
-        private void BtnPause_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Jeu en pause !", "Pause", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
 
         private void BtnRetour_Click(object sender, EventArgs e)
         {
