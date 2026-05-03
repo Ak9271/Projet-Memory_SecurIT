@@ -270,7 +270,7 @@ namespace MemorySecurIT.Forms
             joueurActuel = 1;
             lblScoreJ1.Text = "0";
             lblScoreJ2.Text = "0";
-            MettreAJourUiJoueur();
+            MettreAJourUiJoueur();  
 
             if (taille <= 4) tailleCarte = 90;
             else if (taille <= 6) tailleCarte = 75;

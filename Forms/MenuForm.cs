@@ -17,7 +17,7 @@ namespace MemorySecurIT.Forms
 
         public MenuForm()
         {
-            InitializeComponent();
+            InitializeC         omponent();
         }
 
         private void InitializeComponent()
