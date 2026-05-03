@@ -41,3 +41,4 @@ C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\bin\Debug\net10.0-w
 C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\bin\Debug\net10.0-windows\Assets\Images\Icones_r4_c5.png
 C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\bin\Debug\net10.0-windows\Assets\Images\Icones_r4_c6.png
 C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\bin\Debug\net10.0-windows\Assets\Images\Icones_r4_c7.png
+C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\bin\Debug\net10.0-windows\Assets\Images\Logo.png

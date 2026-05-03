@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MemorySecurIT")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74fb0d93340d1cf4a172790545bf253a65568479")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e6006a83af80b894bf566f25dff2381d336debb")]
 [assembly: System.Reflection.AssemblyProductAttribute("MemorySecurIT")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MemorySecurIT")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
