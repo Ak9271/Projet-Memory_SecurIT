@@ -1,14 +1,8 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "ekIS1BtlC3Go78GgcwVGS2X/GMyI5w/HNHthW0Q5huJtapc+Ur6A3F7GJSx9V2s1iWlk0UeAWzTpfuADq3/M1w==",
   "success": true,
   "projectFilePath": "C:\\Users\\akchy\\Desktop\\Ynov\\B2\\Projet-C#\\MemorySecurIT.csproj",
-=======
-  "dgSpecHash": "k/LGAfqhuPA=",
-  "success": true,
-  "projectFilePath": "C:\\Users\\Pierrite\\Desktop\\MemoryProjet\\Projet-Memory_SecurIT\\MemorySecurIT.csproj",
->>>>>>> 6a77999369b0057334ea66f0eb88a52cf6b8600d
   "expectedPackageFiles": [],
   "logs": []
 }
