@@ -8,6 +8,8 @@ namespace MemorySecurIT.Forms
     public partial class MenuForm : Form
     {
         private Button btnDemarrer;
+        private Button btnOptions;
+        private Button btnQuitter;
         private Label lblTitre;
         private Label lblSousTitre;
         private Label lblVersion;
@@ -21,7 +23,7 @@ namespace MemorySecurIT.Forms
         private void InitializeComponent()
         {
             this.Text = "Memory SecurIT";
-            this.Size = new Size(480, 400);
+            this.Size = new Size(480, 500);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -29,7 +31,7 @@ namespace MemorySecurIT.Forms
 
             panelCard = new Panel()
             {
-                Size = new Size(340, 260),
+                Size = new Size(340, 360),
                 Location = new Point((this.ClientSize.Width - 340) / 2, 50),
                 BackColor = Color.FromArgb(18, 24, 40),
             };
@@ -84,6 +86,42 @@ namespace MemorySecurIT.Forms
             btnDemarrer.Click += BtnDemarrer_Click;
             panelCard.Controls.Add(btnDemarrer);
 
+            btnOptions = new Button()
+            {
+                Text = "OPTIONS",
+                Size = new Size(200, 48),
+                Location = new Point(70, 205),
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                BackColor = Color.FromArgb(26, 34, 55),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            btnOptions.FlatAppearance.BorderSize = 1;
+            btnOptions.FlatAppearance.BorderColor = Color.FromArgb(40, 50, 80);
+            btnOptions.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, 122, 204);
+            btnOptions.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, 90, 160);
+            btnOptions.Click += BtnOptions_Click;
+            panelCard.Controls.Add(btnOptions);
+
+            btnQuitter = new Button()
+            {
+                Text = "QUITTER",
+                Size = new Size(200, 48),
+                Location = new Point(70, 265),
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                BackColor = Color.FromArgb(26, 34, 55),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            btnQuitter.FlatAppearance.BorderSize = 1;
+            btnQuitter.FlatAppearance.BorderColor = Color.FromArgb(40, 50, 80);
+            btnQuitter.FlatAppearance.MouseOverBackColor = Color.FromArgb(200, 50, 50);
+            btnQuitter.FlatAppearance.MouseDownBackColor = Color.FromArgb(160, 40, 40);
+            btnQuitter.Click += BtnQuitter_Click;
+            panelCard.Controls.Add(btnQuitter);
+
             lblVersion = new Label()
             {
                 Text = "v1.0",
@@ -91,7 +129,7 @@ namespace MemorySecurIT.Forms
                 ForeColor = Color.FromArgb(60, 60, 80),
                 AutoSize = false,
                 Size = new Size(340, 20),
-                Location = new Point(0, 225),
+                Location = new Point(0, 325),
                 TextAlign = ContentAlignment.MiddleCenter
             };
             panelCard.Controls.Add(lblVersion);
@@ -102,6 +140,18 @@ namespace MemorySecurIT.Forms
             GameForm gameForm = new GameForm();
             gameForm.Show();
             this.Hide();
+        }
+
+        private void BtnOptions_Click(object sender, EventArgs e)
+        {
+            OptionsForm optionsForm = new OptionsForm();
+            optionsForm.Show();
+            this.Hide();
+        }
+
+        private void BtnQuitter_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

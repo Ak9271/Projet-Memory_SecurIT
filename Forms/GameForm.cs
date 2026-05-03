@@ -17,11 +17,7 @@ namespace MemorySecurIT.Forms
         private Label lblScoreJ2;
         private Label lblNomJ1;
         private Label lblNomJ2;
-        private Label lblSectionTaille;
         private Button btnRetour;
-        private Button btn4x4;
-        private Button btn6x6;
-        private Button btn8x8;
         private Button[,] grilleCartes;
         private int tailleGrille = 0;
         private int tailleCarte = 70;
@@ -254,33 +250,6 @@ namespace MemorySecurIT.Forms
             };
             panelScoreJ2.Controls.Add(lblEssaisJ2);
 
-            Panel separateurH = new Panel()
-            {
-                Size = new Size(150, 1),
-                Location = new Point(30, 270),
-                BackColor = Color.FromArgb(30, 35, 55)
-            };
-            panelGauche.Controls.Add(separateurH);
-
-            lblSectionTaille = new Label()
-            {
-                Text = "TAILLE DE GRILLE",
-                Font = new Font("Segoe UI", 8, FontStyle.Bold),
-                ForeColor = TexteGris,
-                AutoSize = false,
-                Size = new Size(170, 20),
-                Location = new Point(20, 290),
-                TextAlign = ContentAlignment.MiddleLeft
-            };
-            panelGauche.Controls.Add(lblSectionTaille);
-
-            btn4x4 = CreerBoutonTaille("4 × 4", 320, 4);
-            btn6x6 = CreerBoutonTaille("6 × 6", 375, 6);
-            btn8x8 = CreerBoutonTaille("8 × 8", 430, 8);
-            panelGauche.Controls.Add(btn4x4);
-            panelGauche.Controls.Add(btn6x6);
-            panelGauche.Controls.Add(btn8x8);
-
             panelGrille = new Panel()
             {
                 Location = new Point(220, 70),
@@ -289,27 +258,8 @@ namespace MemorySecurIT.Forms
                 BackColor = Color.FromArgb(10, 10, 18)
             };
             this.Controls.Add(panelGrille);
-        }
 
-        private Button CreerBoutonTaille(string texte, int y, int taille)
-        {
-            Button btn = new Button()
-            {
-                Text = texte,
-                Size = new Size(170, 42),
-                Location = new Point(20, y),
-                Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                BackColor = FondPanelClair,
-                ForeColor = TexteBlanc,
-                FlatStyle = FlatStyle.Flat,
-                Cursor = Cursors.Hand
-            };
-            btn.FlatAppearance.BorderSize = 1;
-            btn.FlatAppearance.BorderColor = Color.FromArgb(40, 50, 80);
-            btn.FlatAppearance.MouseOverBackColor = BleuPrimaire;
-            btn.FlatAppearance.MouseDownBackColor = BleuClic;
-            btn.Click += (s, e) => CreerGrille(taille);
-            return btn;
+            this.Load += (s, e) => CreerGrille(AppConfig.TailleGrille);
         }
 
         private void ChronoTimer_Tick(object sender, EventArgs e)
