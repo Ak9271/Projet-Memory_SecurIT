@@ -13,12 +13,14 @@ namespace MemorySecurIT.Classes
 	{
 		public int Id { get; set; }
 		public Image Image { get; set; }
+		public string CheminImage { get; set; }
 		public EtatCarte Etat { get; set; }
 
-		public Carte(int id, Image image)
+		public Carte(int id, string cheminImage)
 		{
 			Id = id;
-			Image = image;
+			CheminImage = cheminImage;
+			Image = null;
 			Etat = EtatCarte.Cachee;
 		}
 	}
