@@ -9,7 +9,6 @@ namespace MemorySecurIT.Forms
     public partial class GameForm : Form
     {
         private Label lblTitre;
-        private Label lblTitreGrille;
         private Button btnRetour;
         private Button btn4x4;
         private Button btn6x6;
@@ -39,30 +38,18 @@ namespace MemorySecurIT.Forms
             this.FormClosing += GameForm_FormClosing;
 
             lblTitre = new Label()
-            {
-                Text = "SecurIT",
-                Font = new Font("Segoe UI", 28, FontStyle.Bold),
-                ForeColor = Color.White,
-                AutoSize = false,
-                Size = new Size(300, 100),
-                Location = new Point(300, 20),
-                TextAlign = ContentAlignment.MiddleCenter
+        {
+            Text = "Choisissez la taille de grille",
+            Font = new Font("Segoe UI", 20, FontStyle.Bold),
+            ForeColor = Color.White,
+            AutoSize = false,
+            Size = new Size(this.ClientSize.Width, 50),
+            Location = new Point(0, 30),
+            TextAlign = ContentAlignment.MiddleCenter
             };
             this.Controls.Add(lblTitre);
-
-            lblTitreGrille = new Label()
-            {
-                Text = "",
-                Font = new Font("Segoe UI", 16, FontStyle.Bold),
-                ForeColor = Color.White,
-                AutoSize = false,
-                Size = new Size(200, 80),
-                Location = new Point(20, 130),
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-            this.Controls.Add(lblTitreGrille);
-
-            panelBoutons = new Panel()
+            
+            panelBoutons = new Panel()            
             {
                 Size = new Size(200, 280),
                 Location = new Point(20, 220),
@@ -86,7 +73,6 @@ namespace MemorySecurIT.Forms
                 BackColor = Color.Transparent
             };
             this.Controls.Add(panelGrille);
-
 
             btnRetour = new Button()
             {
@@ -260,7 +246,6 @@ namespace MemorySecurIT.Forms
                 MessageBox.Show("Félicitations ! La partie est terminée.");
             }
         }
-
 
         private void BtnRetour_Click(object sender, EventArgs e)
         {
