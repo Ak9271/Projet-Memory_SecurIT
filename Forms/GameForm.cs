@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.IO;
+using MemorySecurIT.Classes;
 
 namespace MemorySecurIT.Forms
 {
@@ -28,6 +29,7 @@ namespace MemorySecurIT.Forms
         private bool tourEnCours = false;
         private int scoreJ1 = 0;
         private int scoreJ2 = 0;
+        private Image lockImage = null;
 
         public GameForm()
         {
@@ -39,14 +41,21 @@ namespace MemorySecurIT.Forms
             this.Text = "Memory SecurIT - Jeu";
             this.Size = new Size(1100, 780);
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.BackColor = Color.FromArgb(45, 45, 48);
+            this.BackColor = Color.Black;
             this.FormClosing += GameForm_FormClosing;
+
+            // Charger l'image du logo
+            string logoPath = Path.Combine(Application.StartupPath, "Assets", "Images", "Logo.png");
+            if (File.Exists(logoPath))
+            {
+                lockImage = Image.FromFile(logoPath);
+            }
 
             lblTitre = new Label()
             {
                 Text = "SecurIT",
                 Font = new Font("Segoe UI", 40, FontStyle.Bold),
-                ForeColor = Color.White,
+                ForeColor = Color.FromArgb(0, 102, 204),
                 AutoSize = false,
                 Size = new Size(this.ClientSize.Width, 80),
                 Location = new Point(0, 10),
@@ -58,7 +67,7 @@ namespace MemorySecurIT.Forms
             {
                 Text = "Joueur 1 : 0",
                 Font = new Font("Segoe UI", 16, FontStyle.Bold),
-                ForeColor = Color.Lime,
+                ForeColor = Color.FromArgb(0, 102, 204),
                 AutoSize = false,
                 Size = new Size(200, 40),
                 Location = new Point(this.ClientSize.Width / 2 - 210, 90),
@@ -70,7 +79,7 @@ namespace MemorySecurIT.Forms
             {
                 Text = "Joueur 2 : 0",
                 Font = new Font("Segoe UI", 16, FontStyle.Bold),
-                ForeColor = Color.Red,
+                ForeColor = Color.FromArgb(0, 102, 204),
                 AutoSize = false,
                 Size = new Size(200, 40),
                 Location = new Point(this.ClientSize.Width / 2 + 10, 90),
@@ -90,7 +99,7 @@ namespace MemorySecurIT.Forms
             {
                 Text = "Choisir taille",
                 Font = new Font("Segoe UI", 18, FontStyle.Bold),
-                ForeColor = Color.White,
+                ForeColor = Color.FromArgb(0, 102, 204),
                 AutoSize = false,
                 Size = new Size(180, 40),
                 Location = new Point(10, 10),
@@ -207,7 +216,8 @@ namespace MemorySecurIT.Forms
                         FlatStyle = FlatStyle.Flat,
                         Cursor = Cursors.Hand,
                         Tag = symboles[index],
-                        BackgroundImageLayout = ImageLayout.Stretch
+                        BackgroundImageLayout = ImageLayout.Stretch,
+                        BackgroundImage = lockImage
                     };
                     carte.FlatAppearance.BorderSize = 0;
                     carte.Click += Carte_Click;
@@ -276,8 +286,8 @@ namespace MemorySecurIT.Forms
                         timer.Tick += (s, args) =>
                         {
                             timer.Stop();
-                            carte1.BackgroundImage = null;
-                            carte2.BackgroundImage = null;
+                            carte1.BackgroundImage = lockImage;
+                            carte2.BackgroundImage = lockImage;
                             carte1.FlatAppearance.BorderSize = 0;
                             carte2.FlatAppearance.BorderSize = 0;
                             paireActuelle.Clear();

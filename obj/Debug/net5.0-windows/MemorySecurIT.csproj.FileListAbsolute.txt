@@ -50,3 +50,4 @@ C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\obj\Debug\net5.0-wi
 C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\obj\Debug\net5.0-windows\MemorySecurIT.sourcelink.json
 C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\obj\Debug\net5.0-windows\MemorySecurIT.dll
 C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\obj\Debug\net5.0-windows\MemorySecurIT.pdb
+C:\Users\akchy\Desktop\Ynov\B2\Projet-C#\bin\Debug\net5.0-windows\Assets\Images\Logo.png

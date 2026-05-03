@@ -21,7 +21,7 @@ namespace MemorySecurIT.Forms
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.BackColor = Color.FromArgb(45, 45, 48);
+            this.BackColor = Color.Black;
 
             int formWidth = this.ClientSize.Width;
 
@@ -29,11 +29,11 @@ namespace MemorySecurIT.Forms
             {
                 Text = "Memory SecurIT",
                 Font = new Font("Segoe UI", 24, FontStyle.Bold),
-                ForeColor = Color.White,
+                ForeColor = Color.FromArgb(0, 102, 204),
                 AutoSize = false,
                 Size = new Size(formWidth, 60),
                 Location = new Point(0, 30),
-                TextAlign = ContentAlignment.MiddleCenter // Centre le texte dans les 400px
+                TextAlign = ContentAlignment.MiddleCenter
             };
             this.Controls.Add(lblTitre);
 
