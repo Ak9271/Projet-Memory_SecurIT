@@ -8,15 +8,8 @@ namespace MemorySecurIT.Forms
     public partial class MenuForm : Form
     {
         private Button btnDemarrer;
-<<<<<<< HEAD
-<<<<<<< HEAD
-        private Button btnPause;
-=======
         private Button btnOptions;
         private Button btnQuitter;
->>>>>>> 209c3a9077fa706c9428e581ff6c8a0bcfafbefa
-=======
->>>>>>> parent of 20c9f1b (merge)
         private Label lblTitre;
         private Label lblSousTitre;
         private Label lblVersion;
@@ -24,48 +17,25 @@ namespace MemorySecurIT.Forms
 
         public MenuForm()
         {
-            InitializeC         omponent();
+            InitializeComponent();
         }
 
         private void InitializeComponent()
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-            this.Text = "Memory SecurIT - Menu";
-            this.Size = new Size(400, 300);
-=======
             this.Text = "Memory SecurIT";
             this.Size = new Size(480, 500);
->>>>>>> 209c3a9077fa706c9428e581ff6c8a0bcfafbefa
-=======
-            this.Text = "Memory SecurIT";
-            this.Size = new Size(480, 400);
->>>>>>> parent of 20c9f1b (merge)
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.BackColor = Color.FromArgb(10, 10, 18);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-            int formWidth = this.ClientSize.Width;
-=======
             panelCard = new Panel()
             {
                 Size = new Size(340, 360),
-=======
-            panelCard = new Panel()
-            {
-                Size = new Size(340, 260),
->>>>>>> parent of 20c9f1b (merge)
                 Location = new Point((this.ClientSize.Width - 340) / 2, 50),
                 BackColor = Color.FromArgb(18, 24, 40),
             };
             this.Controls.Add(panelCard);
-<<<<<<< HEAD
->>>>>>> 209c3a9077fa706c9428e581ff6c8a0bcfafbefa
-=======
->>>>>>> parent of 20c9f1b (merge)
 
             lblTitre = new Label()
             {
@@ -116,20 +86,6 @@ namespace MemorySecurIT.Forms
             btnDemarrer.Click += BtnDemarrer_Click;
             panelCard.Controls.Add(btnDemarrer);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-            /*//Pause bouton ???
-            btnPause = new Button()
-            {
-                Text = "Pause",
-                Size = new Size(btnWidth, 50),
-                Location = new Point(centerX, 170),
-                Font = new Font("Segoe UI", 14, FontStyle.Bold),
-                BackColor = Color.FromArgb(204, 120, 0),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Cursor = Cursors.Hand
-=======
             btnOptions = new Button()
             {
                 Text = "OPTIONS",
@@ -168,23 +124,13 @@ namespace MemorySecurIT.Forms
 
             lblVersion = new Label()
             {
-=======
-            lblVersion = new Label()
-            {
->>>>>>> parent of 20c9f1b (merge)
                 Text = "v1.0",
                 Font = new Font("Segoe UI", 8, FontStyle.Regular),
                 ForeColor = Color.FromArgb(60, 60, 80),
                 AutoSize = false,
                 Size = new Size(340, 20),
-<<<<<<< HEAD
                 Location = new Point(0, 325),
                 TextAlign = ContentAlignment.MiddleCenter
->>>>>>> 209c3a9077fa706c9428e581ff6c8a0bcfafbefa
-=======
-                Location = new Point(0, 225),
-                TextAlign = ContentAlignment.MiddleCenter
->>>>>>> parent of 20c9f1b (merge)
             };
             panelCard.Controls.Add(lblVersion);
         }
@@ -195,13 +141,7 @@ namespace MemorySecurIT.Forms
             gameForm.Show();
             this.Hide();
         }
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-        private void BtnPause_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Jeu en pause !", "Pause", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-=======
         private void BtnOptions_Click(object sender, EventArgs e)
         {
             OptionsForm optionsForm = new OptionsForm();
@@ -212,9 +152,6 @@ namespace MemorySecurIT.Forms
         private void BtnQuitter_Click(object sender, EventArgs e)
         {
             Application.Exit();
->>>>>>> 209c3a9077fa706c9428e581ff6c8a0bcfafbefa
         }
-=======
->>>>>>> parent of 20c9f1b (merge)
     }
 }
