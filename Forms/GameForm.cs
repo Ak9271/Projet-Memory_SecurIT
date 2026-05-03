@@ -18,16 +18,16 @@ namespace MemorySecurIT.Forms
         private Label lblNomJ1;
         private Label lblNomJ2;
         private Button btnRetour;
-        private Button[,] grilleCartes;
+        private PictureBox[,] grilleCartes;
         private int tailleGrille = 0;
         private int tailleCarte = 70;
         private Random random = new Random();
         private Panel panelGrille;
         private Panel panelGauche;
         private Panel panelHeader;
-        private List<Button> cartesSelectionnees = new List<Button>();
+        private List<PictureBox> cartesSelectionnees = new List<PictureBox>();
         private int joueurActuel = 1;
-        private List<Button> paireActuelle = new List<Button>();
+        private List<PictureBox> paireActuelle = new List<PictureBox>();
         private bool tourEnCours = false;
         private int scoreJ1 = 0;
         private int scoreJ2 = 0;
@@ -297,7 +297,7 @@ namespace MemorySecurIT.Forms
             paireActuelle.Clear();
             tourEnCours = false;
 
-            grilleCartes = new Button[tailleGrille, tailleGrille];
+            grilleCartes = new PictureBox[tailleGrille, tailleGrille];
 
             string pathImages = Path.Combine(Application.StartupPath, "Assets", "Images");
 
@@ -323,25 +323,32 @@ namespace MemorySecurIT.Forms
                     int index = row * tailleGrille + col;
                     Carte carteModele = jeu.Cartes[index];
 
-                    Button carteBtn = new Button()
+                    Panel wrapperPanel = new Panel()
                     {
-                        Text = "",
                         Size = new Size(tailleCarte, tailleCarte),
                         Location = new Point(startX + col * (tailleCarte + espacement), startY + row * (tailleCarte + espacement)),
+                        BackColor = Color.FromArgb(40, 50, 80),
+                        Padding = new Padding(1)
+                    };
+
+                    PictureBox cartePb = new PictureBox()
+                    {
+                        Size = new Size(tailleCarte - 2, tailleCarte - 2),
+                        Location = new Point(1, 1),
                         BackColor = FondPanelClair,
-                        FlatStyle = FlatStyle.Flat,
+                        SizeMode = PictureBoxSizeMode.StretchImage,
                         Cursor = Cursors.Hand,
                         Tag = carteModele,
-                        BackgroundImageLayout = ImageLayout.Stretch,
-                        BackgroundImage = lockImage
+                        Image = lockImage
                     };
-                    carteBtn.FlatAppearance.BorderSize = 1;
-                    carteBtn.FlatAppearance.BorderColor = Color.FromArgb(40, 50, 80);
-                    carteBtn.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 45, 75);
-                    carteBtn.FlatAppearance.MouseDownBackColor = BleuClic;
-                    carteBtn.Click += Carte_Click;
-                    grilleCartes[row, col] = carteBtn;
-                    panelGrille.Controls.Add(carteBtn);
+
+                    cartePb.MouseClick += Carte_Click;
+                    cartePb.MouseEnter += (s, ev) => { if ((cartePb.Tag as Carte)?.Etat == EtatCarte.Cachee) cartePb.BackColor = Color.FromArgb(30, 45, 75); };
+                    cartePb.MouseLeave += (s, ev) => { if ((cartePb.Tag as Carte)?.Etat == EtatCarte.Cachee) cartePb.BackColor = FondPanelClair; };
+
+                    wrapperPanel.Controls.Add(cartePb);
+                    grilleCartes[row, col] = cartePb;
+                    panelGrille.Controls.Add(wrapperPanel);
                 }
             }
         }
@@ -374,20 +381,20 @@ namespace MemorySecurIT.Forms
         {
             if (tourEnCours) return;
 
-            Button carteBtn = sender as Button;
-            if (carteBtn == null) return;
+            PictureBox cartePb = sender as PictureBox;
+            if (cartePb == null) return;
 
-            Carte carteModele = carteBtn.Tag as Carte;
+            Carte carteModele = cartePb.Tag as Carte;
             if (carteModele == null) return;
 
-            if (!cartesSelectionnees.Contains(carteBtn) && !paireActuelle.Contains(carteBtn))
+            if (!cartesSelectionnees.Contains(cartePb) && !paireActuelle.Contains(cartePb))
             {
-                carteBtn.BackgroundImage = Image.FromFile(carteModele.CheminImage);
+                cartePb.Image = Image.FromFile(carteModele.CheminImage);
                 carteModele.Etat = EtatCarte.Revelee;
-                paireActuelle.Add(carteBtn);
+                paireActuelle.Add(cartePb);
 
-                carteBtn.FlatAppearance.BorderSize = 2;
-                carteBtn.FlatAppearance.BorderColor = (joueurActuel == 1) ? BleuPrimaire : Color.FromArgb(80, 160, 255);
+                Color couleurBord = (joueurActuel == 1) ? BleuPrimaire : Color.FromArgb(80, 160, 255);
+                if (cartePb.Parent != null) cartePb.Parent.BackColor = couleurBord;
 
                 if (paireActuelle.Count == 2)
                 {
@@ -404,18 +411,18 @@ namespace MemorySecurIT.Forms
                         lblEssaisJ2.Text = $"Essais : {essaisJ2}";
                     }
 
-                    Button btn1 = paireActuelle[0];
-                    Button btn2 = paireActuelle[1];
-                    Carte modele1 = btn1.Tag as Carte;
-                    Carte modele2 = btn2.Tag as Carte;
+                    PictureBox pb1 = paireActuelle[0];
+                    PictureBox pb2 = paireActuelle[1];
+                    Carte modele1 = pb1.Tag as Carte;
+                    Carte modele2 = pb2.Tag as Carte;
 
                     if (jeu.VerifierPaire(modele1, modele2))
                     {
                         modele1.Etat = EtatCarte.Trouvee;
                         modele2.Etat = EtatCarte.Trouvee;
 
-                        cartesSelectionnees.Add(btn1);
-                        cartesSelectionnees.Add(btn2);
+                        cartesSelectionnees.Add(pb1);
+                        cartesSelectionnees.Add(pb2);
 
                         if (joueurActuel == 1) scoreJ1++;
                         else scoreJ2++;
@@ -423,8 +430,8 @@ namespace MemorySecurIT.Forms
                         lblScoreJ1.Text = scoreJ1.ToString();
                         lblScoreJ2.Text = scoreJ2.ToString();
 
-                        btn1.FlatAppearance.BorderColor = Color.FromArgb(0, 200, 120);
-                        btn2.FlatAppearance.BorderColor = Color.FromArgb(0, 200, 120);
+                        if (pb1.Parent != null) pb1.Parent.BackColor = Color.FromArgb(0, 200, 120);
+                        if (pb2.Parent != null) pb2.Parent.BackColor = Color.FromArgb(0, 200, 120);
 
                         paireActuelle.Clear();
                         tourEnCours = false;
@@ -439,12 +446,12 @@ namespace MemorySecurIT.Forms
                             timer.Stop();
                             modele1.Etat = EtatCarte.Cachee;
                             modele2.Etat = EtatCarte.Cachee;
-                            btn1.BackgroundImage = lockImage;
-                            btn2.BackgroundImage = lockImage;
-                            btn1.FlatAppearance.BorderSize = 1;
-                            btn2.FlatAppearance.BorderSize = 1;
-                            btn1.FlatAppearance.BorderColor = Color.FromArgb(40, 50, 80);
-                            btn2.FlatAppearance.BorderColor = Color.FromArgb(40, 50, 80);
+                            pb1.Image = lockImage;
+                            pb2.Image = lockImage;
+                            pb1.BackColor = FondPanelClair;
+                            pb2.BackColor = FondPanelClair;
+                            if (pb1.Parent != null) pb1.Parent.BackColor = Color.FromArgb(40, 50, 80);
+                            if (pb2.Parent != null) pb2.Parent.BackColor = Color.FromArgb(40, 50, 80);
                             paireActuelle.Clear();
                             tourEnCours = false;
                             joueurActuel = (joueurActuel == 1) ? 2 : 1;
