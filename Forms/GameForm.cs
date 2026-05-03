@@ -10,460 +10,236 @@ namespace MemorySecurIT.Forms
     public partial class GameForm : Form
     {
         private Label lblTitre;
-        private Label lblTourActuel;
-        private Panel panelScoreJ1;
-        private Panel panelScoreJ2;
+        private Label lblGrilleTaille;
         private Label lblScoreJ1;
         private Label lblScoreJ2;
-        private Label lblNomJ1;
-        private Label lblNomJ2;
-        private Label lblSectionTaille;
         private Button btnRetour;
         private Button btn4x4;
         private Button btn6x6;
         private Button btn8x8;
-        private Button[,] grilleCartes;
-        private int tailleGrille = 0;
-        private int tailleCarte = 70;
-        private Random random = new Random();
         private Panel panelGrille;
         private Panel panelGauche;
-        private Panel panelHeader;
-        private List<Button> cartesSelectionnees = new List<Button>();
-        private int joueurActuel = 1;
-        private List<Button> paireActuelle = new List<Button>();
-        private bool tourEnCours = false;
-        private int scoreJ1 = 0;
-        private int scoreJ2 = 0;
-        private Image lockImage = null;
 
-        private readonly Color BleuPrimaire = Color.FromArgb(0, 122, 204);
-        private readonly Color BleuSurvol = Color.FromArgb(0, 145, 235);
-        private readonly Color BleuClic = Color.FromArgb(0, 90, 160);
-        private readonly Color FondPrincipal = Color.FromArgb(10, 10, 18);
-        private readonly Color FondPanel = Color.FromArgb(18, 24, 40);
-        private readonly Color FondPanelClair = Color.FromArgb(26, 34, 55);
-        private readonly Color TexteBlanc = Color.White;
-        private readonly Color TexteGris = Color.FromArgb(140, 150, 170);
+        private JeuMemory _jeu;
+        private List<Button> _boutonsSelectionnes = new List<Button>();
+        private bool _bloquerClic = false;
 
         public GameForm()
         {
+            _jeu = new JeuMemory();
             InitializeComponent();
         }
 
         private void InitializeComponent()
         {
-            this.Text = "Memory SecurIT — Jeu";
-            this.Size = new Size(1150, 800);
+            this.Text = "Memory SecurIT - Jeu";
+            this.Size = new Size(1100, 780);
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.BackColor = Color.FromArgb(10, 10, 18);
+            this.BackColor = Color.FromArgb(45, 45, 48);
             this.FormClosing += GameForm_FormClosing;
-
-            string logoPath = Path.Combine(Application.StartupPath, "Assets", "Images", "Logo.png");
-            if (File.Exists(logoPath))
-            {
-                lockImage = Image.FromFile(logoPath);
-            }
-
-            panelHeader = new Panel()
-            {
-                Size = new Size(this.ClientSize.Width, 70),
-                Location = new Point(0, 0),
-                BackColor = Color.FromArgb(14, 18, 30)
-            };
-            this.Controls.Add(panelHeader);
 
             lblTitre = new Label()
             {
-                Text = "MEMORY SECURIT",
-                Font = new Font("Segoe UI", 18, FontStyle.Bold),
-                ForeColor = TexteBlanc,
+                Text = "SecurIT",
+                Font = new Font("Segoe UI", 40, FontStyle.Bold),
+                ForeColor = Color.White,
                 AutoSize = false,
-                Size = new Size(400, 70),
-                Location = new Point(30, 0),
-                TextAlign = ContentAlignment.MiddleLeft
-            };
-            panelHeader.Controls.Add(lblTitre);
-
-            Label lblAccent = new Label()
-            {
-                Text = "●",
-                Font = new Font("Segoe UI", 10),
-                ForeColor = BleuPrimaire,
-                AutoSize = true,
-                Location = new Point(295, 27)
-            };
-            panelHeader.Controls.Add(lblAccent);
-
-            lblTourActuel = new Label()
-            {
-                Text = "Tour du Joueur 1",
-                Font = new Font("Segoe UI", 11, FontStyle.Regular),
-                ForeColor = BleuPrimaire,
-                AutoSize = false,
-                Size = new Size(700, 70),
-                Location = new Point(this.ClientSize.Width / 2 - 350, 0),
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-            panelHeader.Controls.Add(lblTourActuel);
-
-            btnRetour = new Button()
-            {
-                Text = "← Menu",
-                Size = new Size(100, 36),
-                Location = new Point(this.ClientSize.Width - 130, 17),
-                Font = new Font("Segoe UI", 10),
-                BackColor = Color.FromArgb(30, 40, 60),
-                ForeColor = TexteGris,
-                FlatStyle = FlatStyle.Flat,
-                Cursor = Cursors.Hand
-            };
-            btnRetour.FlatAppearance.BorderSize = 1;
-            btnRetour.FlatAppearance.BorderColor = Color.FromArgb(50, 60, 90);
-            btnRetour.FlatAppearance.MouseOverBackColor = Color.FromArgb(40, 55, 85);
-            btnRetour.FlatAppearance.MouseDownBackColor = Color.FromArgb(20, 28, 45);
-            btnRetour.Click += BtnRetour_Click;
-            panelHeader.Controls.Add(btnRetour);
-
-            panelGauche = new Panel()
-            {
-                Size = new Size(210, this.ClientSize.Height - 70),
-                Location = new Point(0, 70),
-                BackColor = Color.FromArgb(14, 18, 30)
-            };
-            this.Controls.Add(panelGauche);
-
-            Panel separateurVertical = new Panel()
-            {
-                Size = new Size(1, this.ClientSize.Height - 70),
-                Location = new Point(210, 70),
-                BackColor = Color.FromArgb(30, 35, 55)
-            };
-            this.Controls.Add(separateurVertical);
-
-            panelScoreJ1 = new Panel()
-            {
-                Size = new Size(170, 80),
-                Location = new Point(20, 30),
-                BackColor = FondPanelClair
-            };
-            panelGauche.Controls.Add(panelScoreJ1);
-
-            lblNomJ1 = new Label()
-            {
-                Text = "JOUEUR 1",
-                Font = new Font("Segoe UI", 8, FontStyle.Bold),
-                ForeColor = BleuPrimaire,
-                AutoSize = false,
-                Size = new Size(170, 20),
+                Size = new Size(this.ClientSize.Width, 80),
                 Location = new Point(0, 10),
                 TextAlign = ContentAlignment.MiddleCenter
             };
-            panelScoreJ1.Controls.Add(lblNomJ1);
+            this.Controls.Add(lblTitre);
 
             lblScoreJ1 = new Label()
             {
-                Text = "0",
-                Font = new Font("Segoe UI", 28, FontStyle.Bold),
-                ForeColor = TexteBlanc,
+                Text = "Joueur 1 : 0",
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                ForeColor = Color.Lime,
                 AutoSize = false,
-                Size = new Size(170, 45),
-                Location = new Point(0, 28),
-                TextAlign = ContentAlignment.MiddleCenter
+                Size = new Size(200, 40),
+                Location = new Point(this.ClientSize.Width / 2 - 210, 90),
+                TextAlign = ContentAlignment.MiddleRight
             };
-            panelScoreJ1.Controls.Add(lblScoreJ1);
-
-            panelScoreJ2 = new Panel()
-            {
-                Size = new Size(170, 80),
-                Location = new Point(20, 130),
-                BackColor = FondPanel
-            };
-            panelGauche.Controls.Add(panelScoreJ2);
-
-            lblNomJ2 = new Label()
-            {
-                Text = "JOUEUR 2",
-                Font = new Font("Segoe UI", 8, FontStyle.Bold),
-                ForeColor = TexteGris,
-                AutoSize = false,
-                Size = new Size(170, 20),
-                Location = new Point(0, 10),
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-            panelScoreJ2.Controls.Add(lblNomJ2);
+            this.Controls.Add(lblScoreJ1);
 
             lblScoreJ2 = new Label()
             {
-                Text = "0",
-                Font = new Font("Segoe UI", 28, FontStyle.Bold),
-                ForeColor = TexteGris,
+                Text = "Joueur 2 : 0",
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                ForeColor = Color.Red,
                 AutoSize = false,
-                Size = new Size(170, 45),
-                Location = new Point(0, 28),
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-            panelScoreJ2.Controls.Add(lblScoreJ2);
-
-            Panel separateurH = new Panel()
-            {
-                Size = new Size(150, 1),
-                Location = new Point(30, 240),
-                BackColor = Color.FromArgb(30, 35, 55)
-            };
-            panelGauche.Controls.Add(separateurH);
-
-            lblSectionTaille = new Label()
-            {
-                Text = "TAILLE DE GRILLE",
-                Font = new Font("Segoe UI", 8, FontStyle.Bold),
-                ForeColor = TexteGris,
-                AutoSize = false,
-                Size = new Size(170, 20),
-                Location = new Point(20, 260),
+                Size = new Size(200, 40),
+                Location = new Point(this.ClientSize.Width / 2 + 10, 90),
                 TextAlign = ContentAlignment.MiddleLeft
             };
-            panelGauche.Controls.Add(lblSectionTaille);
+            this.Controls.Add(lblScoreJ2);
 
-            btn4x4 = CreerBoutonTaille("4 × 4", 290, 4);
-            btn6x6 = CreerBoutonTaille("6 × 6", 345, 6);
-            btn8x8 = CreerBoutonTaille("8 × 8", 400, 8);
+            panelGauche = new Panel()
+            {
+                Size = new Size(200, 450),
+                Location = new Point(20, 150),
+                BackColor = Color.Transparent
+            };
+            this.Controls.Add(panelGauche);
+
+            lblGrilleTaille = new Label()
+            {
+                Text = "Choisir taille",
+                Font = new Font("Segoe UI", 18, FontStyle.Bold),
+                ForeColor = Color.White,
+                AutoSize = false,
+                Size = new Size(180, 40),
+                Location = new Point(10, 10),
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+            panelGauche.Controls.Add(lblGrilleTaille);
+
+            btn4x4 = CreerBoutonMenu("4 x 4", 70, 4);
+            btn6x6 = CreerBoutonMenu("6 x 6", 165, 6);
+            btn8x8 = CreerBoutonMenu("8 x 8", 260, 8);
+
             panelGauche.Controls.Add(btn4x4);
             panelGauche.Controls.Add(btn6x6);
             panelGauche.Controls.Add(btn8x8);
 
             panelGrille = new Panel()
             {
-                Location = new Point(220, 70),
-                Size = new Size(this.ClientSize.Width - 220, this.ClientSize.Height - 70),
+                Location = new Point(250, 150),
+                Size = new Size(820, 550),
                 AutoScroll = true,
-                BackColor = Color.FromArgb(10, 10, 18)
+                BackColor = Color.Transparent
             };
             this.Controls.Add(panelGrille);
+
+            btnRetour = new Button()
+            {
+                Text = "Retour au Menu",
+                Size = new Size(150, 40),
+                Location = new Point(475, 710),
+                Font = new Font("Segoe UI", 12),
+                BackColor = Color.FromArgb(100, 100, 100),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            btnRetour.FlatAppearance.BorderSize = 0;
+            btnRetour.Click += BtnRetour_Click;
+            this.Controls.Add(btnRetour);
         }
 
-        private Button CreerBoutonTaille(string texte, int y, int taille)
+        private Button CreerBoutonMenu(string texte, int y, int taille)
         {
             Button btn = new Button()
             {
                 Text = texte,
-                Size = new Size(170, 42),
-                Location = new Point(20, y),
-                Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                BackColor = FondPanelClair,
-                ForeColor = TexteBlanc,
+                Size = new Size(180, 80),
+                Location = new Point(10, y),
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                BackColor = Color.FromArgb(0, 122, 204),
+                ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
                 Cursor = Cursors.Hand
             };
-            btn.FlatAppearance.BorderSize = 1;
-            btn.FlatAppearance.BorderColor = Color.FromArgb(40, 50, 80);
-            btn.FlatAppearance.MouseOverBackColor = BleuPrimaire;
-            btn.FlatAppearance.MouseDownBackColor = BleuClic;
-            btn.Click += (s, e) => CreerGrille(taille);
+            btn.FlatAppearance.BorderSize = 0;
+            btn.Click += (s, e) => NouvellePartie(taille);
             return btn;
         }
 
-        private void CreerGrille(int taille)
+        private void NouvellePartie(int taille)
         {
-            tailleGrille = taille;
-            scoreJ1 = 0;
-            scoreJ2 = 0;
-            joueurActuel = 1;
-            lblScoreJ1.Text = "0";
-            lblScoreJ2.Text = "0";
-            MettreAJourUiJoueur();
+            string path = Path.Combine(Application.StartupPath, "Assets", "Images");
+            _jeu.PreparerPartie(taille, path);
+            
+            lblScoreJ1.Text = "Joueur 1 : 0";
+            lblScoreJ2.Text = "Joueur 2 : 0";
+            lblGrilleTaille.Text = $"Grille {taille} x {taille}";
+            
+            MajAffichageGrille(taille);
+        }
 
-            if (taille <= 4) tailleCarte = 90;
-            else if (taille <= 6) tailleCarte = 75;
-            else tailleCarte = 58;
-
+        private void MajAffichageGrille(int taille)
+        {
             panelGrille.Controls.Clear();
-            cartesSelectionnees.Clear();
-            paireActuelle.Clear();
-            tourEnCours = false;
+            _boutonsSelectionnes.Clear();
+            _bloquerClic = false;
 
-            grilleCartes = new Button[tailleGrille, tailleGrille];
+            int tailleCarte = (taille <= 4) ? 80 : (taille <= 6) ? 70 : 55;
+            int startX = (panelGrille.Width - (taille * tailleCarte + (taille - 1) * 10)) / 2;
+            int startY = 20;
 
-            List<string> symboles = new List<string>();
-            int nbPaires = (tailleGrille * tailleGrille) / 2;
-            string pathImages = Path.Combine(Application.StartupPath, "Assets", "Images");
-
-            if (!Directory.Exists(pathImages))
+            for (int i = 0; i < _jeu.ListeCartes.Count; i++)
             {
-                MessageBox.Show("Dossier Assets/Images introuvable !");
-                return;
-            }
-
-            string[] imageFiles = Directory.GetFiles(pathImages, "Icones_*.*");
-
-            for (int i = 0; i < nbPaires; i++)
-            {
-                string img = imageFiles[i % imageFiles.Length];
-                symboles.Add(img);
-                symboles.Add(img);
-            }
-
-            Shuffle(symboles);
-
-            int espacement = 8;
-            int grilleLargeur = tailleGrille * tailleCarte + (tailleGrille - 1) * espacement;
-            int grilleHauteur = tailleGrille * tailleCarte + (tailleGrille - 1) * espacement;
-            int startX = (panelGrille.Width - grilleLargeur) / 2;
-            int startY = (panelGrille.Height - grilleHauteur) / 2;
-            if (startY < 20) startY = 20;
-            int index = 0;
-
-            for (int row = 0; row < tailleGrille; row++)
-            {
-                for (int col = 0; col < tailleGrille; col++)
+                Button btn = new Button()
                 {
-                    Button carte = new Button()
-                    {
-                        Text = "",
-                        Size = new Size(tailleCarte, tailleCarte),
-                        Location = new Point(startX + col * (tailleCarte + espacement), startY + row * (tailleCarte + espacement)),
-                        BackColor = FondPanelClair,
-                        FlatStyle = FlatStyle.Flat,
-                        Cursor = Cursors.Hand,
-                        Tag = symboles[index],
-                        BackgroundImageLayout = ImageLayout.Stretch,
-                        BackgroundImage = lockImage
-                    };
-                    carte.FlatAppearance.BorderSize = 1;
-                    carte.FlatAppearance.BorderColor = Color.FromArgb(40, 50, 80);
-                    carte.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 45, 75);
-                    carte.FlatAppearance.MouseDownBackColor = BleuClic;
-                    carte.Click += Carte_Click;
-                    grilleCartes[row, col] = carte;
-                    panelGrille.Controls.Add(carte);
-                    index++;
-                }
-            }
-        }
-
-        private void Shuffle<T>(List<T> list)
-        {
-            int n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = random.Next(n + 1);
-                T value = list[k];
-                list[k] = list[n];
-                list[n] = value;
-            }
-        }
-
-        private void MettreAJourUiJoueur()
-        {
-            if (joueurActuel == 1)
-            {
-                panelScoreJ1.BackColor = FondPanelClair;
-                lblScoreJ1.ForeColor = TexteBlanc;
-                lblNomJ1.ForeColor = BleuPrimaire;
-                panelScoreJ2.BackColor = FondPanel;
-                lblScoreJ2.ForeColor = TexteGris;
-                lblNomJ2.ForeColor = TexteGris;
-                lblTourActuel.Text = "Tour du Joueur 1";
-            }
-            else
-            {
-                panelScoreJ2.BackColor = FondPanelClair;
-                lblScoreJ2.ForeColor = TexteBlanc;
-                lblNomJ2.ForeColor = BleuPrimaire;
-                panelScoreJ1.BackColor = FondPanel;
-                lblScoreJ1.ForeColor = TexteGris;
-                lblNomJ1.ForeColor = TexteGris;
-                lblTourActuel.Text = "Tour du Joueur 2";
+                    Size = new Size(tailleCarte, tailleCarte),
+                    Location = new Point(startX + (i % taille) * (tailleCarte + 10), startY + (i / taille) * (tailleCarte + 10)),
+                    BackColor = Color.FromArgb(0, 122, 204),
+                    FlatStyle = FlatStyle.Flat,
+                    Cursor = Cursors.Hand,
+                    Tag = i,
+                    BackgroundImageLayout = ImageLayout.Stretch
+                };
+                btn.FlatAppearance.BorderSize = 0;
+                btn.Click += Carte_Click;
+                panelGrille.Controls.Add(btn);
             }
         }
 
         private void Carte_Click(object sender, EventArgs e)
         {
-            if (tourEnCours) return;
+            if (_bloquerClic) return;
 
-            Button carte = sender as Button;
+            Button btn = sender as Button;
+            int index = (int)btn.Tag;
 
-            if (carte != null && !cartesSelectionnees.Contains(carte) && !paireActuelle.Contains(carte))
+            if (_jeu.ListeCartes[index].Etat != EtatCarte.Cachee || _boutonsSelectionnes.Contains(btn)) return;
+
+            btn.BackgroundImage = Image.FromFile(_jeu.ListeCartes[index].ImagePath);
+            btn.FlatAppearance.BorderSize = 3;
+            btn.FlatAppearance.BorderColor = (_jeu.JoueurActuel == 1) ? Color.Lime : Color.Red;
+            _boutonsSelectionnes.Add(btn);
+
+            if (_boutonsSelectionnes.Count == 2)
             {
-                carte.BackgroundImage = Image.FromFile(carte.Tag.ToString());
-                paireActuelle.Add(carte);
+                _bloquerClic = true;
+                int i1 = (int)_boutonsSelectionnes[0].Tag;
+                int i2 = (int)_boutonsSelectionnes[1].Tag;
 
-                carte.FlatAppearance.BorderSize = 2;
-                carte.FlatAppearance.BorderColor = (joueurActuel == 1) ? BleuPrimaire : Color.FromArgb(80, 160, 255);
-
-                if (paireActuelle.Count == 2)
+                if (_jeu.VerifierPaire(i1, i2))
                 {
-                    tourEnCours = true;
-                    Button carte1 = paireActuelle[0];
-                    Button carte2 = paireActuelle[1];
-
-                    if (carte1.Tag.ToString() == carte2.Tag.ToString())
+                    lblScoreJ1.Text = $"Joueur 1 : {_jeu.ScoreJ1}";
+                    lblScoreJ2.Text = $"Joueur 2 : {_jeu.ScoreJ2}";
+                    _boutonsSelectionnes.Clear();
+                    _bloquerClic = false;
+                    
+                    if (_jeu.EstFini())
                     {
-                        cartesSelectionnees.Add(carte1);
-                        cartesSelectionnees.Add(carte2);
-
-                        if (joueurActuel == 1) scoreJ1++;
-                        else scoreJ2++;
-
-                        lblScoreJ1.Text = scoreJ1.ToString();
-                        lblScoreJ2.Text = scoreJ2.ToString();
-
-                        carte1.FlatAppearance.BorderColor = Color.FromArgb(0, 200, 120);
-                        carte2.FlatAppearance.BorderColor = Color.FromArgb(0, 200, 120);
-
-                        paireActuelle.Clear();
-                        tourEnCours = false;
-                        VerifierVictoire();
-                    }
-                    else
-                    {
-                        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-                        timer.Interval = 900;
-                        timer.Tick += (s, args) =>
-                        {
-                            timer.Stop();
-                            carte1.BackgroundImage = lockImage;
-                            carte2.BackgroundImage = lockImage;
-                            carte1.FlatAppearance.BorderSize = 1;
-                            carte2.FlatAppearance.BorderSize = 1;
-                            carte1.FlatAppearance.BorderColor = Color.FromArgb(40, 50, 80);
-                            carte2.FlatAppearance.BorderColor = Color.FromArgb(40, 50, 80);
-                            paireActuelle.Clear();
-                            tourEnCours = false;
-                            joueurActuel = (joueurActuel == 1) ? 2 : 1;
-                            MettreAJourUiJoueur();
-                            timer.Dispose();
-                        };
-                        timer.Start();
+                        MessageBox.Show($"Terminé !\nJ1: {_jeu.ScoreJ1} | J2: {_jeu.ScoreJ2}");
                     }
                 }
-            }
-        }
-
-        private void VerifierVictoire()
-        {
-            if (cartesSelectionnees.Count == tailleGrille * tailleGrille)
-            {
-                string vainqueur;
-                if (scoreJ1 > scoreJ2) vainqueur = "Joueur 1 remporte la partie !";
-                else if (scoreJ2 > scoreJ1) vainqueur = "Joueur 2 remporte la partie !";
-                else vainqueur = "Égalité !";
-
-                MessageBox.Show(
-                    $"Partie terminée !\n\nJoueur 1 : {scoreJ1} paires\nJoueur 2 : {scoreJ2} paires\n\n{vainqueur}",
-                    "Résultat",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                else
+                {
+                    System.Windows.Forms.Timer t = new System.Windows.Forms.Timer { Interval = 1000 };
+                    t.Tick += (s, args) =>
+                    {
+                        t.Stop();
+                        _boutonsSelectionnes[0].BackgroundImage = null;
+                        _boutonsSelectionnes[0].FlatAppearance.BorderSize = 0;
+                        _boutonsSelectionnes[1].BackgroundImage = null;
+                        _boutonsSelectionnes[1].FlatAppearance.BorderSize = 0;
+                        _boutonsSelectionnes.Clear();
+                        _bloquerClic = false;
+                        t.Dispose();
+                    };
+                    t.Start();
+                }
             }
         }
 
         private void BtnRetour_Click(object sender, EventArgs e)
         {
             this.Hide();
-            MenuForm menu = new MenuForm();
-            menu.Show();
+            new MenuForm().Show();
         }
 
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
