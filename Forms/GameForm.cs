@@ -37,6 +37,15 @@ namespace MemorySecurIT.Forms
         private int scoreJ2 = 0;
         private Image lockImage = null;
 
+        private System.Windows.Forms.Timer chronoTimer;
+        private int tempsEcouleSecondes = 0;
+        private Label lblChrono;
+
+        private int essaisJ1 = 0;
+        private int essaisJ2 = 0;
+        private Label lblEssaisJ1;
+        private Label lblEssaisJ2;
+
         private readonly Color BleuPrimaire = Color.FromArgb(0, 122, 204);
         private readonly Color BleuSurvol = Color.FromArgb(0, 145, 235);
         private readonly Color BleuClic = Color.FromArgb(0, 90, 160);
@@ -58,6 +67,10 @@ namespace MemorySecurIT.Forms
             this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.FromArgb(10, 10, 18);
             this.FormClosing += GameForm_FormClosing;
+
+            chronoTimer = new System.Windows.Forms.Timer();
+            chronoTimer.Interval = 1000;
+            chronoTimer.Tick += ChronoTimer_Tick;
 
             string logoPath = Path.Combine(Application.StartupPath, "Assets", "Images", "Logo.png");
             if (File.Exists(logoPath))
@@ -101,11 +114,23 @@ namespace MemorySecurIT.Forms
                 Font = new Font("Segoe UI", 11, FontStyle.Regular),
                 ForeColor = BleuPrimaire,
                 AutoSize = false,
-                Size = new Size(700, 70),
-                Location = new Point(this.ClientSize.Width / 2 - 350, 0),
+                Size = new Size(300, 70),
+                Location = new Point(this.ClientSize.Width / 2 - 150, 0),
                 TextAlign = ContentAlignment.MiddleCenter
             };
             panelHeader.Controls.Add(lblTourActuel);
+
+            lblChrono = new Label()
+            {
+                Text = "⏱️ 00:00",
+                Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                ForeColor = TexteBlanc,
+                AutoSize = false,
+                Size = new Size(150, 70),
+                Location = new Point(this.ClientSize.Width / 2 + 150, 0),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            panelHeader.Controls.Add(lblChrono);
 
             btnRetour = new Button()
             {
@@ -143,7 +168,7 @@ namespace MemorySecurIT.Forms
 
             panelScoreJ1 = new Panel()
             {
-                Size = new Size(170, 80),
+                Size = new Size(170, 100),
                 Location = new Point(20, 30),
                 BackColor = FondPanelClair
             };
@@ -173,10 +198,22 @@ namespace MemorySecurIT.Forms
             };
             panelScoreJ1.Controls.Add(lblScoreJ1);
 
+            lblEssaisJ1 = new Label()
+            {
+                Text = "Essais : 0",
+                Font = new Font("Segoe UI", 8, FontStyle.Regular),
+                ForeColor = TexteGris,
+                AutoSize = false,
+                Size = new Size(170, 20),
+                Location = new Point(0, 75),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            panelScoreJ1.Controls.Add(lblEssaisJ1);
+
             panelScoreJ2 = new Panel()
             {
-                Size = new Size(170, 80),
-                Location = new Point(20, 130),
+                Size = new Size(170, 100),
+                Location = new Point(20, 150),
                 BackColor = FondPanel
             };
             panelGauche.Controls.Add(panelScoreJ2);
@@ -205,10 +242,22 @@ namespace MemorySecurIT.Forms
             };
             panelScoreJ2.Controls.Add(lblScoreJ2);
 
+            lblEssaisJ2 = new Label()
+            {
+                Text = "Essais : 0",
+                Font = new Font("Segoe UI", 8, FontStyle.Regular),
+                ForeColor = TexteGris,
+                AutoSize = false,
+                Size = new Size(170, 20),
+                Location = new Point(0, 75),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            panelScoreJ2.Controls.Add(lblEssaisJ2);
+
             Panel separateurH = new Panel()
             {
                 Size = new Size(150, 1),
-                Location = new Point(30, 240),
+                Location = new Point(30, 270),
                 BackColor = Color.FromArgb(30, 35, 55)
             };
             panelGauche.Controls.Add(separateurH);
@@ -220,14 +269,14 @@ namespace MemorySecurIT.Forms
                 ForeColor = TexteGris,
                 AutoSize = false,
                 Size = new Size(170, 20),
-                Location = new Point(20, 260),
+                Location = new Point(20, 290),
                 TextAlign = ContentAlignment.MiddleLeft
             };
             panelGauche.Controls.Add(lblSectionTaille);
 
-            btn4x4 = CreerBoutonTaille("4 × 4", 290, 4);
-            btn6x6 = CreerBoutonTaille("6 × 6", 345, 6);
-            btn8x8 = CreerBoutonTaille("8 × 8", 400, 8);
+            btn4x4 = CreerBoutonTaille("4 × 4", 320, 4);
+            btn6x6 = CreerBoutonTaille("6 × 6", 375, 6);
+            btn8x8 = CreerBoutonTaille("8 × 8", 430, 8);
             panelGauche.Controls.Add(btn4x4);
             panelGauche.Controls.Add(btn6x6);
             panelGauche.Controls.Add(btn8x8);
@@ -263,15 +312,30 @@ namespace MemorySecurIT.Forms
             return btn;
         }
 
+        private void ChronoTimer_Tick(object sender, EventArgs e)
+        {
+            tempsEcouleSecondes++;
+            TimeSpan time = TimeSpan.FromSeconds(tempsEcouleSecondes);
+            lblChrono.Text = "⏱️ " + time.ToString(@"mm\:ss");
+        }
+
         private void CreerGrille(int taille)
         {
             tailleGrille = taille;
             scoreJ1 = 0;
             scoreJ2 = 0;
+            essaisJ1 = 0;
+            essaisJ2 = 0;
             joueurActuel = 1;
             lblScoreJ1.Text = "0";
             lblScoreJ2.Text = "0";
+            lblEssaisJ1.Text = "Essais : 0";
+            lblEssaisJ2.Text = "Essais : 0";
             MettreAJourUiJoueur();
+
+            tempsEcouleSecondes = 0;
+            lblChrono.Text = "⏱️ 00:00";
+            chronoTimer.Start();
 
             if (taille <= 4) tailleCarte = 90;
             else if (taille <= 6) tailleCarte = 75;
@@ -395,6 +459,18 @@ namespace MemorySecurIT.Forms
                 if (paireActuelle.Count == 2)
                 {
                     tourEnCours = true;
+                    
+                    if (joueurActuel == 1)
+                    {
+                        essaisJ1++;
+                        lblEssaisJ1.Text = $"Essais : {essaisJ1}";
+                    }
+                    else
+                    {
+                        essaisJ2++;
+                        lblEssaisJ2.Text = $"Essais : {essaisJ2}";
+                    }
+
                     Button carte1 = paireActuelle[0];
                     Button carte2 = paireActuelle[1];
 
@@ -445,13 +521,17 @@ namespace MemorySecurIT.Forms
         {
             if (cartesSelectionnees.Count == tailleGrille * tailleGrille)
             {
+                chronoTimer.Stop();
                 string vainqueur;
                 if (scoreJ1 > scoreJ2) vainqueur = "Joueur 1 remporte la partie !";
                 else if (scoreJ2 > scoreJ1) vainqueur = "Joueur 2 remporte la partie !";
                 else vainqueur = "Égalité !";
 
+                TimeSpan time = TimeSpan.FromSeconds(tempsEcouleSecondes);
+                string tempsText = time.ToString(@"mm\:ss");
+
                 MessageBox.Show(
-                    $"Partie terminée !\n\nJoueur 1 : {scoreJ1} paires\nJoueur 2 : {scoreJ2} paires\n\n{vainqueur}",
+                    $"Partie terminée en {tempsText} !\n\nJoueur 1 : {scoreJ1} paires (en {essaisJ1} essais)\nJoueur 2 : {scoreJ2} paires (en {essaisJ2} essais)\n\n{vainqueur}",
                     "Résultat",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
