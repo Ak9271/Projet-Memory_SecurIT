@@ -17,7 +17,11 @@ namespace MemorySecurIT.Forms
         private Label lblScoreJ2;
         private Label lblNomJ1;
         private Label lblNomJ2;
+        private Label lblSectionTaille;
         private Button btnRetour;
+        private Button btn4x4;
+        private Button btn6x6;
+        private Button btn8x8;
         private Button[,] grilleCartes;
         private int tailleGrille = 0;
         private int tailleCarte = 70;
@@ -32,15 +36,6 @@ namespace MemorySecurIT.Forms
         private int scoreJ1 = 0;
         private int scoreJ2 = 0;
         private Image lockImage = null;
-
-        private System.Windows.Forms.Timer chronoTimer;
-        private int tempsEcouleSecondes = 0;
-        private Label lblChrono;
-
-        private int essaisJ1 = 0;
-        private int essaisJ2 = 0;
-        private Label lblEssaisJ1;
-        private Label lblEssaisJ2;
 
         private readonly Color BleuPrimaire = Color.FromArgb(0, 122, 204);
         private readonly Color BleuSurvol = Color.FromArgb(0, 145, 235);
@@ -64,10 +59,6 @@ namespace MemorySecurIT.Forms
             this.BackColor = Color.FromArgb(10, 10, 18);
             this.FormClosing += GameForm_FormClosing;
 
-            chronoTimer = new System.Windows.Forms.Timer();
-            chronoTimer.Interval = 1000;
-            chronoTimer.Tick += ChronoTimer_Tick;
-
             string logoPath = Path.Combine(Application.StartupPath, "Assets", "Images", "Logo.png");
             if (File.Exists(logoPath))
             {
@@ -90,6 +81,7 @@ namespace MemorySecurIT.Forms
                 AutoSize = false,
                 Size = new Size(400, 70),
                 Location = new Point(30, 0),
+<<<<<<< HEAD
                 TextAlign = ContentAlignment.MiddleLeft
             };
             panelHeader.Controls.Add(lblTitre);
@@ -110,23 +102,11 @@ namespace MemorySecurIT.Forms
                 Font = new Font("Segoe UI", 11, FontStyle.Regular),
                 ForeColor = BleuPrimaire,
                 AutoSize = false,
-                Size = new Size(300, 70),
-                Location = new Point(this.ClientSize.Width / 2 - 150, 0),
+                Size = new Size(700, 70),
+                Location = new Point(this.ClientSize.Width / 2 - 350, 0),
                 TextAlign = ContentAlignment.MiddleCenter
             };
             panelHeader.Controls.Add(lblTourActuel);
-
-            lblChrono = new Label()
-            {
-                Text = "⏱️ 00:00",
-                Font = new Font("Segoe UI", 14, FontStyle.Bold),
-                ForeColor = TexteBlanc,
-                AutoSize = false,
-                Size = new Size(150, 70),
-                Location = new Point(this.ClientSize.Width / 2 + 150, 0),
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-            panelHeader.Controls.Add(lblChrono);
 
             btnRetour = new Button()
             {
@@ -164,7 +144,144 @@ namespace MemorySecurIT.Forms
 
             panelScoreJ1 = new Panel()
             {
-                Size = new Size(170, 100),
+                Size = new Size(170, 80),
+                Location = new Point(20, 30),
+                BackColor = FondPanelClair
+            };
+            panelGauche.Controls.Add(panelScoreJ1);
+
+            lblNomJ1 = new Label()
+            {
+                Text = "JOUEUR 1",
+                Font = new Font("Segoe UI", 8, FontStyle.Bold),
+                ForeColor = BleuPrimaire,
+                AutoSize = false,
+                Size = new Size(170, 20),
+                Location = new Point(0, 10),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            this.Controls.Add(lblTitre);
+
+            lblScoreJ1 = new Label()
+            {
+                Text = "Joueur 1 : 0",
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                ForeColor = Color.Lime,
+                AutoSize = false,
+                Size = new Size(170, 45),
+                Location = new Point(0, 28),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            panelScoreJ1.Controls.Add(lblScoreJ1);
+
+            panelScoreJ2 = new Panel()
+            {
+                Size = new Size(170, 80),
+                Location = new Point(20, 130),
+                BackColor = FondPanel
+            };
+            panelGauche.Controls.Add(panelScoreJ2);
+
+            lblNomJ2 = new Label()
+            {
+                Text = "JOUEUR 2",
+                Font = new Font("Segoe UI", 8, FontStyle.Bold),
+                ForeColor = TexteGris,
+                AutoSize = false,
+                Size = new Size(170, 20),
+                Location = new Point(0, 10),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            this.Controls.Add(lblScoreJ1);
+
+            lblScoreJ2 = new Label()
+            {
+                Text = "Joueur 2 : 0",
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                ForeColor = Color.Red,
+                AutoSize = false,
+                Size = new Size(200, 40),
+                Location = new Point(this.ClientSize.Width / 2 + 10, 90),
+=======
+>>>>>>> parent of 20c9f1b (merge)
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+            panelHeader.Controls.Add(lblTitre);
+
+            Label lblAccent = new Label()
+            {
+                Text = "●",
+                Font = new Font("Segoe UI", 10),
+                ForeColor = BleuPrimaire,
+                AutoSize = true,
+                Location = new Point(295, 27)
+            };
+            panelHeader.Controls.Add(lblAccent);
+
+            lblTourActuel = new Label()
+            {
+                Text = "Tour du Joueur 1",
+                Font = new Font("Segoe UI", 11, FontStyle.Regular),
+                ForeColor = BleuPrimaire,
+                AutoSize = false,
+                Size = new Size(700, 70),
+                Location = new Point(this.ClientSize.Width / 2 - 350, 0),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            panelHeader.Controls.Add(lblTourActuel);
+
+            btnRetour = new Button()
+            {
+                Text = "← Menu",
+                Size = new Size(100, 36),
+                Location = new Point(this.ClientSize.Width - 130, 17),
+                Font = new Font("Segoe UI", 10),
+                BackColor = Color.FromArgb(30, 40, 60),
+                ForeColor = TexteGris,
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            btnRetour.FlatAppearance.BorderSize = 1;
+            btnRetour.FlatAppearance.BorderColor = Color.FromArgb(50, 60, 90);
+            btnRetour.FlatAppearance.MouseOverBackColor = Color.FromArgb(40, 55, 85);
+            btnRetour.FlatAppearance.MouseDownBackColor = Color.FromArgb(20, 28, 45);
+            btnRetour.Click += BtnRetour_Click;
+            panelHeader.Controls.Add(btnRetour);
+
+            Panel separateurH = new Panel()
+            {
+<<<<<<< HEAD
+                Size = new Size(150, 1),
+                Location = new Point(30, 240),
+                BackColor = Color.FromArgb(30, 35, 55)
+=======
+                Size = new Size(210, this.ClientSize.Height - 70),
+                Location = new Point(0, 70),
+                BackColor = Color.FromArgb(14, 18, 30)
+>>>>>>> parent of 20c9f1b (merge)
+            };
+            panelGauche.Controls.Add(separateurH);
+
+<<<<<<< HEAD
+            lblSectionTaille = new Label()
+            {
+                Text = "TAILLE DE GRILLE",
+                Font = new Font("Segoe UI", 8, FontStyle.Bold),
+                ForeColor = TexteGris,
+                AutoSize = false,
+                Size = new Size(170, 20),
+=======
+            Panel separateurVertical = new Panel()
+            {
+                Size = new Size(1, this.ClientSize.Height - 70),
+                Location = new Point(210, 70),
+                BackColor = Color.FromArgb(30, 35, 55)
+            };
+            this.Controls.Add(separateurVertical);
+
+            panelScoreJ1 = new Panel()
+            {
+                Size = new Size(170, 80),
                 Location = new Point(20, 30),
                 BackColor = FondPanelClair
             };
@@ -194,22 +311,10 @@ namespace MemorySecurIT.Forms
             };
             panelScoreJ1.Controls.Add(lblScoreJ1);
 
-            lblEssaisJ1 = new Label()
-            {
-                Text = "Essais : 0",
-                Font = new Font("Segoe UI", 8, FontStyle.Regular),
-                ForeColor = TexteGris,
-                AutoSize = false,
-                Size = new Size(170, 20),
-                Location = new Point(0, 75),
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-            panelScoreJ1.Controls.Add(lblEssaisJ1);
-
             panelScoreJ2 = new Panel()
             {
-                Size = new Size(170, 100),
-                Location = new Point(20, 150),
+                Size = new Size(170, 80),
+                Location = new Point(20, 130),
                 BackColor = FondPanel
             };
             panelGauche.Controls.Add(panelScoreJ2);
@@ -238,17 +343,33 @@ namespace MemorySecurIT.Forms
             };
             panelScoreJ2.Controls.Add(lblScoreJ2);
 
-            lblEssaisJ2 = new Label()
+            Panel separateurH = new Panel()
             {
-                Text = "Essais : 0",
-                Font = new Font("Segoe UI", 8, FontStyle.Regular),
+                Size = new Size(150, 1),
+                Location = new Point(30, 240),
+                BackColor = Color.FromArgb(30, 35, 55)
+            };
+            panelGauche.Controls.Add(separateurH);
+
+            lblSectionTaille = new Label()
+            {
+                Text = "TAILLE DE GRILLE",
+                Font = new Font("Segoe UI", 8, FontStyle.Bold),
                 ForeColor = TexteGris,
                 AutoSize = false,
                 Size = new Size(170, 20),
-                Location = new Point(0, 75),
-                TextAlign = ContentAlignment.MiddleCenter
+>>>>>>> parent of 20c9f1b (merge)
+                Location = new Point(20, 260),
+                TextAlign = ContentAlignment.MiddleLeft
             };
-            panelScoreJ2.Controls.Add(lblEssaisJ2);
+            panelGauche.Controls.Add(lblSectionTaille);
+
+            btn4x4 = CreerBoutonTaille("4 × 4", 290, 4);
+            btn6x6 = CreerBoutonTaille("6 × 6", 345, 6);
+            btn8x8 = CreerBoutonTaille("8 × 8", 400, 8);
+            panelGauche.Controls.Add(btn4x4);
+            panelGauche.Controls.Add(btn6x6);
+            panelGauche.Controls.Add(btn8x8);
 
             panelGrille = new Panel()
             {
@@ -258,15 +379,27 @@ namespace MemorySecurIT.Forms
                 BackColor = Color.FromArgb(10, 10, 18)
             };
             this.Controls.Add(panelGrille);
-
-            this.Load += (s, e) => CreerGrille(AppConfig.TailleGrille);
         }
 
-        private void ChronoTimer_Tick(object sender, EventArgs e)
+        private Button CreerBoutonTaille(string texte, int y, int taille)
         {
-            tempsEcouleSecondes++;
-            TimeSpan time = TimeSpan.FromSeconds(tempsEcouleSecondes);
-            lblChrono.Text = "⏱️ " + time.ToString(@"mm\:ss");
+            Button btn = new Button()
+            {
+                Text = texte,
+                Size = new Size(170, 42),
+                Location = new Point(20, y),
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                BackColor = FondPanelClair,
+                ForeColor = TexteBlanc,
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            btn.FlatAppearance.BorderSize = 1;
+            btn.FlatAppearance.BorderColor = Color.FromArgb(40, 50, 80);
+            btn.FlatAppearance.MouseOverBackColor = BleuPrimaire;
+            btn.FlatAppearance.MouseDownBackColor = BleuClic;
+            btn.Click += (s, e) => CreerGrille(taille);
+            return btn;
         }
 
         private void CreerGrille(int taille)
@@ -274,22 +407,30 @@ namespace MemorySecurIT.Forms
             tailleGrille = taille;
             scoreJ1 = 0;
             scoreJ2 = 0;
-            essaisJ1 = 0;
-            essaisJ2 = 0;
             joueurActuel = 1;
             lblScoreJ1.Text = "0";
             lblScoreJ2.Text = "0";
-            lblEssaisJ1.Text = "Essais : 0";
-            lblEssaisJ2.Text = "Essais : 0";
+<<<<<<< HEAD
+            MettreAJourUiJoueur();  
+=======
             MettreAJourUiJoueur();
-
-            tempsEcouleSecondes = 0;
-            lblChrono.Text = "⏱️ 00:00";
-            chronoTimer.Start();
+>>>>>>> parent of 20c9f1b (merge)
 
             if (taille <= 4) tailleCarte = 90;
             else if (taille <= 6) tailleCarte = 75;
             else tailleCarte = 58;
+<<<<<<< HEAD
+
+            panelGrille.Controls.Clear();
+            _boutonsSelectionnes.Clear();
+            _bloquerClic = false;
+
+            int tailleCarte = (taille <= 4) ? 80 : (taille <= 6) ? 70 : 55;
+            int startX = (panelGrille.Width - (taille * tailleCarte + (taille - 1) * 10)) / 2;
+            int startY = 20;
+
+            for (int i = 0; i < _jeu.ListeCartes.Count; i++)
+=======
 
             panelGrille.Controls.Clear();
             cartesSelectionnees.Clear();
@@ -359,6 +500,7 @@ namespace MemorySecurIT.Forms
         {
             int n = list.Count;
             while (n > 1)
+>>>>>>> parent of 20c9f1b (merge)
             {
                 n--;
                 int k = random.Next(n + 1);
@@ -398,6 +540,14 @@ namespace MemorySecurIT.Forms
 
             Button carte = sender as Button;
 
+<<<<<<< HEAD
+            if (_jeu.ListeCartes[index].Etat != EtatCarte.Cachee || _boutonsSelectionnes.Contains(btn)) return;
+
+            btn.BackgroundImage = Image.FromFile(_jeu.ListeCartes[index].ImagePath);
+            btn.FlatAppearance.BorderSize = 3;
+            btn.FlatAppearance.BorderColor = (_jeu.JoueurActuel == 1) ? Color.Lime : Color.Red;
+            _boutonsSelectionnes.Add(btn);
+=======
             if (carte != null && !cartesSelectionnees.Contains(carte) && !paireActuelle.Contains(carte))
             {
                 carte.BackgroundImage = Image.FromFile(carte.Tag.ToString());
@@ -405,22 +555,11 @@ namespace MemorySecurIT.Forms
 
                 carte.FlatAppearance.BorderSize = 2;
                 carte.FlatAppearance.BorderColor = (joueurActuel == 1) ? BleuPrimaire : Color.FromArgb(80, 160, 255);
+>>>>>>> parent of 20c9f1b (merge)
 
                 if (paireActuelle.Count == 2)
                 {
                     tourEnCours = true;
-                    
-                    if (joueurActuel == 1)
-                    {
-                        essaisJ1++;
-                        lblEssaisJ1.Text = $"Essais : {essaisJ1}";
-                    }
-                    else
-                    {
-                        essaisJ2++;
-                        lblEssaisJ2.Text = $"Essais : {essaisJ2}";
-                    }
-
                     Button carte1 = paireActuelle[0];
                     Button carte2 = paireActuelle[1];
 
@@ -471,17 +610,13 @@ namespace MemorySecurIT.Forms
         {
             if (cartesSelectionnees.Count == tailleGrille * tailleGrille)
             {
-                chronoTimer.Stop();
                 string vainqueur;
                 if (scoreJ1 > scoreJ2) vainqueur = "Joueur 1 remporte la partie !";
                 else if (scoreJ2 > scoreJ1) vainqueur = "Joueur 2 remporte la partie !";
                 else vainqueur = "Égalité !";
 
-                TimeSpan time = TimeSpan.FromSeconds(tempsEcouleSecondes);
-                string tempsText = time.ToString(@"mm\:ss");
-
                 MessageBox.Show(
-                    $"Partie terminée en {tempsText} !\n\nJoueur 1 : {scoreJ1} paires (en {essaisJ1} essais)\nJoueur 2 : {scoreJ2} paires (en {essaisJ2} essais)\n\n{vainqueur}",
+                    $"Partie terminée !\n\nJoueur 1 : {scoreJ1} paires\nJoueur 2 : {scoreJ2} paires\n\n{vainqueur}",
                     "Résultat",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
