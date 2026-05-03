@@ -10,6 +10,8 @@ namespace MemorySecurIT.Forms
     {
         private Label lblTitre;
         private Label lblGrilleTaille;
+        private Label lblScoreJ1;
+        private Label lblScoreJ2;
         private Button btnRetour;
         private Button btn4x4;
         private Button btn6x6;
@@ -24,6 +26,8 @@ namespace MemorySecurIT.Forms
         private int joueurActuel = 1;
         private List<Button> paireActuelle = new List<Button>();
         private bool tourEnCours = false;
+        private int scoreJ1 = 0;
+        private int scoreJ2 = 0;
 
         public GameForm()
         {
@@ -33,12 +37,11 @@ namespace MemorySecurIT.Forms
         private void InitializeComponent()
         {
             this.Text = "Memory SecurIT - Jeu";
-            this.Size = new Size(1100, 750);
+            this.Size = new Size(1100, 780);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.FromArgb(45, 45, 48);
             this.FormClosing += GameForm_FormClosing;
 
-            // Titre principal "SecurIT"
             lblTitre = new Label()
             {
                 Text = "SecurIT",
@@ -51,19 +54,41 @@ namespace MemorySecurIT.Forms
             };
             this.Controls.Add(lblTitre);
 
-            // Panel gauche avec les boutons de taille
+            lblScoreJ1 = new Label()
+            {
+                Text = "Joueur 1 : 0",
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                ForeColor = Color.Lime,
+                AutoSize = false,
+                Size = new Size(200, 40),
+                Location = new Point(this.ClientSize.Width / 2 - 210, 90),
+                TextAlign = ContentAlignment.MiddleRight
+            };
+            this.Controls.Add(lblScoreJ1);
+
+            lblScoreJ2 = new Label()
+            {
+                Text = "Joueur 2 : 0",
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                ForeColor = Color.Red,
+                AutoSize = false,
+                Size = new Size(200, 40),
+                Location = new Point(this.ClientSize.Width / 2 + 10, 90),
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+            this.Controls.Add(lblScoreJ2);
+
             panelGauche = new Panel()
             {
-                Size = new Size(200, 400),
-                Location = new Point(20, 120),
+                Size = new Size(200, 450),
+                Location = new Point(20, 150),
                 BackColor = Color.Transparent
             };
             this.Controls.Add(panelGauche);
 
-            // Label "Grille X x X"
             lblGrilleTaille = new Label()
             {
-                Text = "Grille 8 x 8",
+                Text = "Choisir taille",
                 Font = new Font("Segoe UI", 18, FontStyle.Bold),
                 ForeColor = Color.White,
                 AutoSize = false,
@@ -73,7 +98,6 @@ namespace MemorySecurIT.Forms
             };
             panelGauche.Controls.Add(lblGrilleTaille);
 
-            // Boutons de taille en colonne
             btn4x4 = CreerBoutonMenu("4 x 4", 70, 4);
             btn6x6 = CreerBoutonMenu("6 x 6", 165, 6);
             btn8x8 = CreerBoutonMenu("8 x 8", 260, 8);
@@ -82,17 +106,15 @@ namespace MemorySecurIT.Forms
             panelGauche.Controls.Add(btn6x6);
             panelGauche.Controls.Add(btn8x8);
 
-            // Panel droit avec la grille
             panelGrille = new Panel()
             {
-                Location = new Point(250, 120),
-                Size = new Size(820, 580),
+                Location = new Point(250, 150),
+                Size = new Size(820, 550),
                 AutoScroll = true,
                 BackColor = Color.Transparent
             };
             this.Controls.Add(panelGrille);
 
-            // Bouton Retour
             btnRetour = new Button()
             {
                 Text = "Retour au Menu",
@@ -130,6 +152,12 @@ namespace MemorySecurIT.Forms
         private void CreerGrille(int taille)
         {
             tailleGrille = taille;
+            scoreJ1 = 0;
+            scoreJ2 = 0;
+            joueurActuel = 1;
+            lblScoreJ1.Text = "Joueur 1 : 0";
+            lblScoreJ2.Text = "Joueur 2 : 0";
+
             if (taille <= 4) tailleCarte = 80;
             else if (taille <= 6) tailleCarte = 70;
             else tailleCarte = 55;
@@ -143,7 +171,6 @@ namespace MemorySecurIT.Forms
 
             List<string> symboles = new List<string>();
             int nbPaires = (tailleGrille * tailleGrille) / 2;
-            
             string pathImages = Path.Combine(Application.StartupPath, "Assets", "Images");
 
             if (!Directory.Exists(pathImages))
@@ -191,7 +218,6 @@ namespace MemorySecurIT.Forms
                 }
             }
 
-            // Mettre à jour le label de la taille de grille
             lblGrilleTaille.Text = $"Grille {taille} x {taille}";
         }
 
@@ -232,6 +258,13 @@ namespace MemorySecurIT.Forms
                     {
                         cartesSelectionnees.Add(carte1);
                         cartesSelectionnees.Add(carte2);
+
+                        if (joueurActuel == 1) scoreJ1++;
+                        else scoreJ2++;
+
+                        lblScoreJ1.Text = $"Joueur 1 : {scoreJ1}";
+                        lblScoreJ2.Text = $"Joueur 2 : {scoreJ2}";
+
                         paireActuelle.Clear();
                         tourEnCours = false;
                         VerifierVictoire();
@@ -249,7 +282,6 @@ namespace MemorySecurIT.Forms
                             carte2.FlatAppearance.BorderSize = 0;
                             paireActuelle.Clear();
                             tourEnCours = false;
-                            
                             joueurActuel = (joueurActuel == 1) ? 2 : 1;
                             timer.Dispose();
                         };
@@ -263,13 +295,20 @@ namespace MemorySecurIT.Forms
         {
             if (cartesSelectionnees.Count == tailleGrille * tailleGrille)
             {
-                MessageBox.Show("Félicitations ! La partie est terminée.");
+                string vainqueur = "";
+                if (scoreJ1 > scoreJ2) vainqueur = "\nVictoire du Joueur 1 !";
+                else if (scoreJ2 > scoreJ1) vainqueur = "\nVictoire du Joueur 2 !";
+                else vainqueur = "\nÉgalité !";
+
+                MessageBox.Show($"La partie est terminée !\n\nScore Final :\nJoueur 1 : {scoreJ1}\nJoueur 2 : {scoreJ2}{vainqueur}");
             }
         }
 
         private void BtnRetour_Click(object sender, EventArgs e)
         {
             this.Hide();
+            MenuForm menu = new MenuForm();
+            menu.Show();
         }
 
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)

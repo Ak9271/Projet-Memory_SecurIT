@@ -42,3 +42,11 @@ C:\Users\akchy\Desktop\Ynov\B2\Projet-C#\bin\Debug\net5.0-windows\Assets\Images\
 C:\Users\akchy\Desktop\Ynov\B2\Projet-C#\bin\Debug\net5.0-windows\Assets\Images\Icones_r4_c5.png
 C:\Users\akchy\Desktop\Ynov\B2\Projet-C#\bin\Debug\net5.0-windows\Assets\Images\Icones_r4_c6.png
 C:\Users\akchy\Desktop\Ynov\B2\Projet-C#\bin\Debug\net5.0-windows\Assets\Images\Icones_r4_c7.png
+C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\obj\Debug\net5.0-windows\MemorySecurIT.csproj.AssemblyReference.cache
+C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\obj\Debug\net5.0-windows\MemorySecurIT.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\obj\Debug\net5.0-windows\MemorySecurIT.AssemblyInfoInputs.cache
+C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\obj\Debug\net5.0-windows\MemorySecurIT.AssemblyInfo.cs
+C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\obj\Debug\net5.0-windows\MemorySecurIT.csproj.CoreCompileInputs.cache
+C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\obj\Debug\net5.0-windows\MemorySecurIT.sourcelink.json
+C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\obj\Debug\net5.0-windows\MemorySecurIT.dll
+C:\Users\Pierrite\Desktop\MemoryProjet\Projet-Memory_SecurIT\obj\Debug\net5.0-windows\MemorySecurIT.pdb
